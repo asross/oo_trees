@@ -17,11 +17,14 @@ class Dataset():
         if attributes is None: attributes = self.attributes()
         return min(attributes, key=self.entropy_of)
 
-    def most_common_outcomes(self, n):
+    def most_common_outcomes(self, n=None):
         return Counter(p.outcome() for p in self.points).most_common(n)
 
     def most_common_outcome(self):
         return self.most_common_outcomes(1)[0][0]
+
+    def is_unanimous(self):
+        return len(self.most_common_outcomes()) == 1
 
     def split_on(self, attribute):
         return { value: self.__class__(list(points)) for value, points in groupby(self.points, key=lambda p: p.get(attribute)) }
@@ -57,4 +60,12 @@ if __name__ == '__main__':
             point3 = ListDatapoint([1, 0, 'T'])
             dataset = Dataset([point1, point2, point3])
             self.assertEqual(dataset.most_common_outcome(), 'T')
+        def test_is_unanimous(self):
+            point1 = ListDatapoint([0, 1, 'H'])
+            point2 = ListDatapoint([0, 0, 'T'])
+            point3 = ListDatapoint([1, 0, 'T'])
+            unanimous_dataset = Dataset([point2, point3])
+            disagreeing_dataset = Dataset([point1, point2, point3])
+            self.assertEqual(unanimous_dataset.is_unanimous(), True)
+            self.assertEqual(disagreeing_dataset.is_unanimous(), False)
     unittest.main()
