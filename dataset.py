@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import Counter
 from entropy_counter import EntropyCounter
 
 class Dataset():
@@ -14,6 +15,13 @@ class Dataset():
     def best_attribute(self, attributes=None):
         if attributes is None: attributes = self.attributes()
         return min(attributes, key=self.entropy_of)
+
+    def most_common_outcomes(self, n):
+        outcomes = map(self.outcome_of, self.points)
+        return Counter(outcomes).most_common(n)
+
+    def most_common_outcome(self):
+        return self.most_common_outcomes(1)[0][0]
 
     def split_on(self, attribute):
         points_by_value = defaultdict(list)

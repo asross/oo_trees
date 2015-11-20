@@ -46,4 +46,11 @@ if __name__ == '__main__':
             self.assertEqual(split.keys(), [0, 1])
             self.assertEqual(split[1].points, [point1])
             self.assertEqual(split[0].points, [point2, point3])
+        def test_most_common_outcome(self):
+            point1 = [0, 1, 'H']
+            point2 = [0, 0, 'T']
+            point3 = [1, 0, 'T']
+            dataset = ListDataset([point1, point2, point3])
+            self.assertEqual(dataset.most_common_outcome(), 'T')
+
     unittest.main()
