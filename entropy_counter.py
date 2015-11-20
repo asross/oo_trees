@@ -3,16 +3,16 @@ from math import log
 
 class EntropyCounter():
     def __init__(self):
-        self.dictionary = defaultdict(int)
+        self.outcome_counts = defaultdict(int)
         self.total = 0
-    def record(self, value):
-        self.dictionary[value] += 1
+    def record(self, outcome):
+        self.outcome_counts[outcome] += 1
         self.total += 1
-    def entropy_of(self, count):
-        probability = float(count) / self.total
+    def outcome_entropy(self, outcome):
+        probability = self.outcome_counts[outcome] / float(self.total)
         return -probability * log(probability, 2)
     def entropy(self):
-        return sum(self.entropy_of(count) for _, count in self.dictionary.items())
+        return sum(self.outcome_entropy(outcome) for outcome in self.outcome_counts.keys())
 
 if __name__ == '__main__':
     import unittest
@@ -21,9 +21,9 @@ if __name__ == '__main__':
             counter = EntropyCounter()
             for c in 'aabbc': counter.record(c)
             self.assertEqual(counter.total, 5)
-            self.assertEqual(counter.dictionary['a'], 2)
-            self.assertEqual(counter.dictionary['b'], 2)
-            self.assertEqual(counter.dictionary['c'], 1)
+            self.assertEqual(counter.outcome_counts['a'], 2)
+            self.assertEqual(counter.outcome_counts['b'], 2)
+            self.assertEqual(counter.outcome_counts['c'], 1)
         def test_entropy(self):
             counter = EntropyCounter()
             self.assertEqual(counter.entropy(), 0)
