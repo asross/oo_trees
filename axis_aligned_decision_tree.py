@@ -3,22 +3,30 @@ class AxisAlignedDecisionTree:
         # the root node looks at every attribute
         if attributes is None: attributes = dataset.attributes()
 
-        if len(attributes) is 0 or dataset.is_unanimous():
-            self.leaf_outcome = dataset.most_common_outcome()
-        else:
-            self.leaf_outcome = None
+        # record the most common outcome
+        self.most_common_outcome = dataset.most_common_outcome()
+
+        # potentially add some branches
+        self.branches = {}
+        if len(attributes) >= 1 and not dataset.is_unanimous():
             self.branch_attribute = dataset.best_attribute(attributes)
-            remaining_attributes = list(attributes)
-            remaining_attributes.remove(self.branch_attribute)
-            self.branches = { branch_value: self.__class__(subset, remaining_attributes) for branch_value, subset in dataset.split_on(self.branch_attribute).items() }
+            remaining_attributes = [a for a in attributes if a != self.branch_attribute]
+            for branch_value, subset in dataset.split_on(self.branch_attribute).items():
+                self.branches[branch_value] = self.__class__(subset, remaining_attributes)
 
     def classify(self, point):
-        if self.leaf_outcome:
-            return self.leaf_outcome
-        else:
+        if self.branches:
             branch_value = point.get(self.branch_attribute)
-            branch_tree = self.branches[branch_value]
-            return branch_tree.classify(point)
+            if branch_value in self.branches:
+                # we have a subtree for the point's branch attr value
+                return self.branches[branch_value].classify(point)
+            else:
+                # we have subtrees, but none for the point; we could try to pick
+                # a subtree but for now we'll just return the most popular leaf.
+                return self.most_common_outcome
+        else:
+            # we don't have any subtrees (i.e. we're a leaf node)
+            return self.most_common_outcome
 
 if __name__ == '__main__':
     import unittest
@@ -36,4 +44,5 @@ if __name__ == '__main__':
             self.assertEqual(tree.classify(ListDatapoint([0, 1])), 'H')
             self.assertEqual(tree.classify(ListDatapoint([1, 0])), 'H')
             self.assertEqual(tree.classify(ListDatapoint([1, 1])), 'T')
+            self.assertEqual(tree.classify(ListDatapoint([2, 0])), 'H') # it can handle unknown values too
     unittest.main()
