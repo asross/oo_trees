@@ -2,6 +2,7 @@ from collections import defaultdict
 from collections import Counter
 from entropy_counter import EntropyCounter
 from itertools import groupby
+import random
 
 class Dataset():
     def __init__(self, points=[]):
@@ -28,6 +29,11 @@ class Dataset():
 
     def split_on(self, attribute):
         return { value: self.__class__(list(points)) for value, points in groupby(self.points, key=lambda p: p.get(attribute)) }
+
+    def bootstrap(self, number_of_points=None):
+        if number_of_points is None:
+            number_of_points = len(self.points)
+        return self.__class__([random.choice(self.points) for i in range(number_of_points)])
 
     def attributes(self):
         return self.points[0].attributes() if self.points else []
@@ -68,4 +74,11 @@ if __name__ == '__main__':
             disagreeing_dataset = Dataset([point1, point2, point3])
             self.assertEqual(unanimous_dataset.is_unanimous(), True)
             self.assertEqual(disagreeing_dataset.is_unanimous(), False)
+        def test_bootstrap(self):
+            point1 = ListDatapoint([0, 1, 'H'])
+            point2 = ListDatapoint([0, 0, 'T'])
+            dataset = Dataset([point1, point2])
+            bootstrap = dataset.bootstrap(1000)
+            self.assertEqual(len(bootstrap.points), 1000)
+            self.assertEqual(point1 in bootstrap.points, True) # this has a 10e-302ish chance of failing
     unittest.main()
