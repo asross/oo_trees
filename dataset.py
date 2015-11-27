@@ -1,7 +1,6 @@
 from collections import defaultdict
 from collections import Counter
 from entropy_counter import EntropyCounter
-from itertools import groupby
 import random
 
 class Dataset():
@@ -28,7 +27,10 @@ class Dataset():
         return len(self.most_common_outcomes()) == 1
 
     def split_on(self, attribute):
-        return { value: self.__class__(list(points)) for value, points in groupby(self.points, key=lambda p: p.get(attribute)) }
+        subsets = defaultdict(list)
+        for point in self.points:
+            subsets[point.get(attribute)].append(point)
+        return { value: self.__class__(points) for value, points in subsets.items() }
 
     def bootstrap(self, number_of_points=None):
         if number_of_points is None:
