@@ -25,23 +25,18 @@ class DecisionForest:
 if __name__ == '__main__':
     import unittest
     from dataset import Dataset
-    from list_datapoint import ListDatapoint
+    import numpy as np
 
     class TestDecisionForest(unittest.TestCase):
         def test_classification(self):
-            point1 = ListDatapoint([0, 'H'])
-            point2 = ListDatapoint([0, 'H'])
-            point3 = ListDatapoint([1, 'H'])
-            point4 = ListDatapoint([1, 'T'])
-            point5 = ListDatapoint([1, 'T'])
-            dataset = Dataset([point1, point2, point3, point4, point5])
+            X = np.array([[0], [0], [1], [1], [1]])
+            y = np.array(['H', 'H', 'H', 'T', 'T'])
+            dataset = Dataset(X, y)
             forest = DecisionForest(dataset, n_trees=500, n_points=5)
-            self.assertEqual(forest.classify(point1), 'H')
-            self.assertEqual(forest.classify(point5), 'T')
-            self.assertEqual(forest.classify(point3), 'T')
+            self.assertEqual(forest.classify([0]), 'H')
+            self.assertEqual(forest.classify([1]), 'T')
             forest = DecisionForest(dataset, n_trees=5, n_points=500)
-            self.assertEqual(forest.classify(point1), 'H')
-            self.assertEqual(forest.classify(point5), 'T')
-            self.assertEqual(forest.classify(point3), 'T')
+            self.assertEqual(forest.classify([0]), 'H')
+            self.assertEqual(forest.classify([1]), 'T')
 
     unittest.main()

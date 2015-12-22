@@ -17,7 +17,7 @@ class AxisAlignedDecisionTree:
 
     def classify(self, point):
         if self.branches:
-            value = point.get(self.feature)
+            value = point[self.feature]
             if value in self.branches:
                 # we have a subtree for the point's feature value
                 return self.branches[value].classify(point)
@@ -31,21 +31,19 @@ class AxisAlignedDecisionTree:
 
 if __name__ == '__main__':
     import unittest
-    from list_datapoint import ListDatapoint
+    import numpy as np
     from dataset import Dataset
 
     class TestAxisAlignedDecisionTree(unittest.TestCase):
         def test_classification(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'H'])
-            point3 = ListDatapoint([1, 0, 'H'])
-            point4 = ListDatapoint([1, 1, 'T'])
-            dataset = Dataset([point1, point2, point3, point4])
+            X = np.array([[0, 1], [0, 0], [1, 0], [1, 1]])
+            y = np.array(['H', 'H', 'H', 'T'])
+            dataset = Dataset(X, y)
             tree = AxisAlignedDecisionTree(dataset)
-            self.assertEqual(tree.classify(ListDatapoint([0, 0])), 'H')
-            self.assertEqual(tree.classify(ListDatapoint([0, 1])), 'H')
-            self.assertEqual(tree.classify(ListDatapoint([1, 0])), 'H')
-            self.assertEqual(tree.classify(ListDatapoint([1, 1])), 'T')
-            self.assertEqual(tree.classify(ListDatapoint([2, 0])), 'H') # it can handle unknown values too
+            self.assertEqual(tree.classify([0, 0]), 'H')
+            self.assertEqual(tree.classify([0, 1]), 'H')
+            self.assertEqual(tree.classify([1, 0]), 'H')
+            self.assertEqual(tree.classify([1, 1]), 'T')
+            self.assertEqual(tree.classify([2, 0]), 'H') # it can handle unknown values too
 
     unittest.main()

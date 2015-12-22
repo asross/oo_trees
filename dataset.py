@@ -4,20 +4,13 @@ from entropy_counter import EntropyCounter
 import random
 
 class Dataset():
-    def __init__(self, points=[]):
-        self.points = points
-
-    def entropy_of(self, feature):
-        entropies = defaultdict(EntropyCounter)
-        for point in self.points:
-            entropies[point.get(feature)].record(point.outcome())
-        return sum(counter.entropy() for counter in entropies.values())
-
-    def best_feature(self, features):
-        return min(features, key=self.entropy_of)
+    def __init__(self, X, y=None):
+       self.X = X
+       self.y = y
+       self.n_points = X.shape[0]
 
     def most_common_outcomes(self, n=None):
-        return Counter(point.outcome() for point in self.points).most_common(n)
+        return Counter(outcome for outcome in self.y).most_common(n)
 
     def most_common_outcome(self):
         return self.most_common_outcomes(1)[0][0]
@@ -25,66 +18,74 @@ class Dataset():
     def is_unanimous(self):
         return len(self.most_common_outcomes()) == 1
 
-    def split_on(self, feature):
-        subsets = defaultdict(list)
-        for point in self.points:
-            subsets[point.get(feature)].append(point)
-        return { value: self.__class__(points) for value, points in subsets.items() }
-
-    def bootstrap(self, number_of_points=None):
-        if number_of_points is None:
-            number_of_points = len(self.points)
-        return self.__class__([random.choice(self.points) for i in range(number_of_points)])
+    def take(self, indices):
+        return self.__class__(self.X.take(indices, 0), self.y.take(indices))
 
     def features(self):
-        return self.points[0].features() if self.points else []
+        return range(self.X.shape[1])
+
+    def best_feature(self, features):
+        return min(features, key=self.entropy_of)
+
+    def entropy_of(self, feature):
+        entropies = defaultdict(EntropyCounter)
+        for i in range(self.n_points):
+            entropies[self.X[i][feature]].record(self.y[i])
+        return sum(counter.entropy() for counter in entropies.values())
+
+    def split_on(self, feature):
+        indices_by_value = defaultdict(list)
+        for i in range(self.n_points):
+            indices_by_value[self.X[i][feature]].append(i)
+        return { value: self.take(indices) for value, indices in indices_by_value.items() }
+
+    def bootstrap(self, n_points=None):
+        indices = list()
+        for _i in range(n_points or self.n_points):
+            indices.append(random.randrange(self.n_points))
+        return self.take(indices)
 
 if __name__ == '__main__':
     import unittest
-    from list_datapoint import ListDatapoint
+    import numpy as np
 
     class TestDataset(unittest.TestCase):
         def test_entropy(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'T'])
-            dataset = Dataset([point1, point2])
+            X = np.array([[0, 1], [0, 0]])
+            y = np.array(['H', 'T'])
+            dataset = Dataset(X, y)
             self.assertEqual(dataset.entropy_of(0), 1)
             self.assertEqual(dataset.entropy_of(1), 0)
             self.assertEqual(dataset.best_feature([0]), 0)
             self.assertEqual(dataset.best_feature([0, 1]), 1)
 
         def test_split_on(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'T'])
-            point3 = ListDatapoint([1, 0, 'T'])
-            dataset = Dataset([point1, point2, point3])
+            X = np.array([[0, 1], [0, 0], [1, 0]])
+            y = np.array(['H', 'T', 'T'])
+            dataset = Dataset(X, y)
             split = dataset.split_on(1)
             self.assertEqual(split.keys(), [0, 1])
-            self.assertEqual(split[1].points, [point1])
-            self.assertEqual(split[0].points, [point2, point3])
+            np.testing.assert_array_equal(split[1].X, np.array([[0, 1]]))
+            np.testing.assert_array_equal(split[0].X, np.array([[0, 0], [1, 0]]))
 
         def test_most_common_outcome(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'T'])
-            point3 = ListDatapoint([1, 0, 'T'])
-            dataset = Dataset([point1, point2, point3])
+            X = np.array([[0, 1], [0, 0], [1, 0]])
+            y = np.array(['H', 'T', 'T'])
+            dataset = Dataset(X, y)
             self.assertEqual(dataset.most_common_outcome(), 'T')
 
         def test_is_unanimous(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'T'])
-            point3 = ListDatapoint([1, 0, 'T'])
-            unanimous_dataset = Dataset([point2, point3])
-            disagreeing_dataset = Dataset([point1, point2, point3])
+            unanimous_dataset = Dataset(np.array([[0, 0], [1, 0]]), np.array(['T', 'T']))
+            fractious_dataset = Dataset(np.array([[0, 1], [0, 0], [1, 0]]), np.array(['H', 'T', 'T']))
             self.assertEqual(unanimous_dataset.is_unanimous(), True)
-            self.assertEqual(disagreeing_dataset.is_unanimous(), False)
+            self.assertEqual(fractious_dataset.is_unanimous(), False)
 
         def test_bootstrap(self):
-            point1 = ListDatapoint([0, 1, 'H'])
-            point2 = ListDatapoint([0, 0, 'T'])
-            dataset = Dataset([point1, point2])
+            X = np.array([[0, 1], [0, 0]])
+            y = np.array(['H', 'T'])
+            dataset = Dataset(X, y)
             bootstrap = dataset.bootstrap(1000)
-            self.assertEqual(len(bootstrap.points), 1000)
-            self.assertEqual(point1 in bootstrap.points, True) # this has a 10e-302ish chance of failing
+            self.assertEqual(bootstrap.n_points, 1000)
+            self.assertEqual('H' in bootstrap.y, True) # this has a 10e-302ish chance of failing
 
     unittest.main()
