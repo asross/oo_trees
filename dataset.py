@@ -3,57 +3,60 @@ from collections import Counter
 from entropy_counter import EntropyCounter
 import random
 import numpy
-import operator
+
+class SingleAttributeSplitter():
+    def __init__(self, attribute, value):
+        self.attribute = attribute
+        self.value = value
+
+class GreaterThanSplitter(SingleAttributeSplitter):
+    def split(self, point):
+        return point[self.attribute] > self.value
+
+class IsEqualSplitter(SingleAttributeSplitter):
+    def split(self, point):
+        return point[self.attribute] == self.value
 
 class Dataset():
-    def __init__(self, X, y=None, attribute_types=None, all_categorical=False):
-       self.X = X
-       self.y = y
-       if attribute_types is None:
-          self.attribute_types = numpy.full(self.X.shape[1], all_categorical)
-       else:
-          self.attribute_types = attribute_types
+    def __init__(self, X, y=None, attribute_types=None):
+        self.X = X
+        self.y = y
+        self.attribute_types = attribute_types
+        if attribute_types is None:
+            self.attribute_types = numpy.full(self.X.shape[1], 0)
 
     def is_numeric(self, attribute):
         return self.attribute_types[attribute]
 
-    def each_splitter(self):
+    def each_single_attribute_splitter(self):
         for attribute in range(self.X.shape[1]):
             values = self.X[:, attribute]
             if self.is_numeric(attribute):
-                stdd, maximum, value = values.std(), values.max(), values.min()
+                stddev, maximum, value = values.std(), values.max(), values.min()
                 while value < maximum:
-                    yield attribute, operator.gt, value
-                    value += stdd / 10.0
+                    yield GreaterThanSplitter(attribute, value)
+                    value += stddev / 10.0
             else:
                 for value in numpy.unique(values):
-                    yield attribute, operator.eq, value
+                    yield IsEqualSplitter(attribute, value)
 
-    def best_splitter(self):
-        return min(self.each_splitter(), key=self.entropy_of)
+    def best_single_attribute_splitter(self):
+        return min(self.each_single_attribute_splitter(), key=self.splitter_entropy)
 
-    def entropy_of(self, splitter):
-        attribute, fn, value = splitter
-        split_entropies = [EntropyCounter(), EntropyCounter()]
+    def splitter_entropy(self, splitter):
+        splits = [EntropyCounter(), EntropyCounter()]
         for i in range(self.X.shape[0]):
-            split_entropies[fn(self.X[i][attribute], value)].record(self.y[i])
-        return sum(split.entropy() for split in split_entropies)
+            splits[splitter.split(self.X[i])].record(self.y[i])
+        return sum(counter.entropy() for counter in splits)
 
     def split_on(self, splitter):
-        attribute, fn, value = splitter
         splits = [[], []]
         for i in range(self.X.shape[0]):
-            splits[fn(self.X[i][attribute], value)].append(i)
-        return map(lambda i: self.take(i), splits)
+            splits[splitter.split(self.X[i])].append(i)
+        return [self.take(indexes) for indexes in splits]
 
-    def most_common_outcomes(self, n=None):
-        return Counter(outcome for outcome in self.y).most_common(n)
-
-    def most_common_outcome(self):
-        return self.most_common_outcomes(1)[0][0]
-
-    def is_unanimous(self):
-        return len(self.most_common_outcomes()) == 1
+    def outcomes(self):
+        return Counter(self.y)
 
     def take(self, indices):
         return self.__class__(self.X.take(indices, 0), self.y.take(indices), self.attribute_types)
@@ -71,18 +74,21 @@ if __name__ == '__main__':
         def test_entropy(self):
             X = numpy.array([[0, 1], [0, 0]])
             y = numpy.array(['H', 'T'])
-            dataset = Dataset(X, y)
-            self.assertEqual(dataset.entropy_of([0, operator.eq, 0]), 1)
-            self.assertEqual(dataset.entropy_of([0, operator.eq, 1]), 1)
-            self.assertEqual(dataset.entropy_of([1, operator.eq, 0]), 0)
-            self.assertEqual(dataset.entropy_of([1, operator.eq, 1]), 0)
-            self.assertEqual(dataset.best_splitter(), (1, operator.eq, 0))
+            dataset = Dataset(X, y, [0, 0])
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 0)), 1)
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 1)), 1)
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(1, 0)), 0)
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(1, 1)), 0)
+
+            best_splitter = dataset.best_single_attribute_splitter()
+            self.assertEqual(best_splitter.attribute, 1)
+            self.assertEqual(best_splitter.value, 0)
 
         def test_split_on(self):
             X = numpy.array([[0, 1], [0, 0], [1, 0]])
             y = numpy.array(['H', 'T', 'T'])
             dataset = Dataset(X, y)
-            split = dataset.split_on([1, operator.eq, 0])
+            split = dataset.split_on(IsEqualSplitter(1, 0))
             numpy.testing.assert_array_equal(split[0].X, numpy.array([[0, 1]]))
             numpy.testing.assert_array_equal(split[1].X, numpy.array([[0, 0], [1, 0]]))
 
@@ -101,31 +107,22 @@ if __name__ == '__main__':
                              [0.51, 1]])
             y = numpy.array(['Red', 'Red', 'Yellow', 'Yellow', 'Red', 'Green', 'Green', 'Green', 'Green'])
             dataset = Dataset(X, y, [1, 0])
-            splitter = dataset.best_splitter()
-            attr, op, value = splitter
-            self.assertEqual(attr, 0)
-            self.assertEqual(op, operator.gt)
-            self.assertGreaterEqual(value, 0.45)
-            self.assertLess(value, 0.52)
+            splitter = dataset.best_single_attribute_splitter()
+            self.assertEqual(splitter.attribute, 0)
+            self.assertGreaterEqual(splitter.value, 0.45)
+            self.assertLess(splitter.value, 0.52)
 
             subset1, subset2 = dataset.split_on(splitter)
-            subsplitter = subset1.best_splitter()
-            sattr, sop, svalue = subsplitter
-            self.assertEqual(sattr, 1)
-            self.assertEqual(sop, operator.eq)
-            self.assertEqual(svalue, 0)
+            subsplitter = subset1.best_single_attribute_splitter()
+            self.assertEqual(subsplitter.attribute, 1)
+            self.assertEqual(subsplitter.value, 0)
 
-        def test_most_common_outcome(self):
+        def test_outcomes(self):
             X = numpy.array([[0, 1], [0, 0], [1, 0]])
             y = numpy.array(['H', 'T', 'T'])
             dataset = Dataset(X, y)
-            self.assertEqual(dataset.most_common_outcome(), 'T')
-
-        def test_is_unanimous(self):
-            unanimous_dataset = Dataset(numpy.array([[0, 0], [1, 0]]), numpy.array(['T', 'T']))
-            fractious_dataset = Dataset(numpy.array([[0, 1], [0, 0], [1, 0]]), numpy.array(['H', 'T', 'T']))
-            self.assertEqual(unanimous_dataset.is_unanimous(), True)
-            self.assertEqual(fractious_dataset.is_unanimous(), False)
+            outcomes = dataset.outcomes()
+            self.assertEqual(outcomes.most_common(), [('T', 2), ('H', 1)])
 
         def test_bootstrap(self):
             X = numpy.array([[0, 1], [0, 0]])
