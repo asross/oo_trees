@@ -1,45 +1,41 @@
 class AxisAlignedDecisionTree:
-    def __init__(self, dataset, features=None):
-        # the root node looks at every feature
-        if features is None: features = dataset.features()
+    def __init__(self, dataset):
+        outcomes = dataset.outcomes()
+        self.most_common_outcome = outcomes.most_common(1)[0][0]
 
-        # record the most common outcome
-        self.most_common_outcome = dataset.most_common_outcome()
-
-        # potentially add some branches
-        self.branches = {}
-        if len(features) >= 1 and not dataset.is_unanimous():
-            best_feature = dataset.best_feature(features)
-            remaining_features = [a for a in features if a != best_feature]
-            self.feature = best_feature
-            for value, subset in dataset.split_on(best_feature).items():
-                self.branches[value] = self.__class__(subset, remaining_features)
+        # split until we have unanimity in either X or y
+        self.splitter = None
+        self.branches = []
+        if len(outcomes) > 1:
+            splitter = dataset.best_single_attribute_splitter()
+            subset1, subset2 = dataset.split_on(splitter)
+            if len(subset1.y) and len(subset2.y):
+                self.splitter = splitter
+                self.branches = [self.__class__(subset1), self.__class__(subset2)]
 
     def classify(self, point):
-        if self.branches:
-            value = point[self.feature]
-            if value in self.branches:
-                # we have a subtree for the point's feature value
-                return self.branches[value].classify(point)
-            else:
-                # we have subtrees, but none for the point; we could try to pick
-                # a subtree but for now we'll just return the most popular leaf.
-                return self.most_common_outcome
+        if self.splitter:
+            return self.branches[self.splitter.split(point)].classify(point)
         else:
-            # we don't have any subtrees (i.e. we're a leaf node)
             return self.most_common_outcome
 
 if __name__ == '__main__':
     import unittest
-    import numpy as np
+    import numpy
     from dataset import Dataset
 
     class TestAxisAlignedDecisionTree(unittest.TestCase):
         def test_classification(self):
-            X = np.array([[0, 1], [0, 0], [1, 0], [1, 1]])
-            y = np.array(['H', 'H', 'H', 'T'])
-            dataset = Dataset(X, y)
+            X = numpy.array([[0, 1], [0, 0], [1, 0], [1, 1]])
+            y = numpy.array(['H', 'H', 'H', 'T'])
+            dataset = Dataset(X, y, [0, 0])
             tree = AxisAlignedDecisionTree(dataset)
+            self.assertEqual(len(tree.branches), 2)
+            self.assertEqual(len(tree.branches[1].branches), 0)
+            self.assertEqual(len(tree.branches[0].branches), 2)
+            self.assertEqual(len(tree.branches[0].branches[1].branches), 0)
+            self.assertEqual(len(tree.branches[0].branches[0].branches), 0)
+
             self.assertEqual(tree.classify([0, 0]), 'H')
             self.assertEqual(tree.classify([0, 1]), 'H')
             self.assertEqual(tree.classify([1, 0]), 'H')
