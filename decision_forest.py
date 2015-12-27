@@ -1,19 +1,13 @@
 from collections import Counter
 from axis_aligned_decision_tree import AxisAlignedDecisionTree
-import multiprocessing as mp
-
-def grow_tree(tree_class, dataset, n_points):
-    return tree_class(dataset.bootstrap(n_points))
 
 class DecisionForest:
-    def __init__(self, dataset, tree_class=None, n_trees=None, n_points=None, processor=None, processes=None):
+    def __init__(self, dataset, tree_class=None, n_trees=None, n_points=None):
         if n_trees is None: n_trees = 50 # TODO -- how many?
         if n_points is None: n_points = len(dataset.points)
-        if processes is None: processes = 10 # TODO -- how many?
-        if processor is None: processor = mp.Pool(processes=processes)
         if tree_class is None: tree_class = AxisAlignedDecisionTree
 
-        self.trees = [processor.apply(grow_tree, (tree_class, dataset, n_points)) for _i in range(n_trees)]
+        self.trees = [tree_class(dataset.bootstrap(n_points)) for _i in range(n_trees)]
 
     def vote_on(self, point):
         # TODO: we could return early as soon as we have a definite plurality
