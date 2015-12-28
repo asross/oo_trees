@@ -1,7 +1,7 @@
 from collections import Counter
 from math import log
 
-class EntropyCounter():
+class OutcomeCounter():
     def __init__(self):
         self.counter = Counter()
         self.total = 0
@@ -26,9 +26,9 @@ class EntropyCounter():
 if __name__ == '__main__':
     import unittest
 
-    class TestEntropyCounter(unittest.TestCase):
+    class TestOutcomeCounter(unittest.TestCase):
         def test_counting(self):
-            counter = EntropyCounter()
+            counter = OutcomeCounter()
             for c in 'aabbc': counter.record(c)
             self.assertEqual(counter.total, 5)
             self.assertEqual(counter['a'], 2)
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             self.assertEqual(counter['c'], 1)
 
         def test_entropy(self):
-            counter = EntropyCounter()
+            counter = OutcomeCounter()
             self.assertEqual(counter.entropy(), 0)
             counter.record('H')
             self.assertEqual(counter.entropy(), 0)

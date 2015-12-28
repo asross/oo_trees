@@ -1,6 +1,6 @@
 from collections import defaultdict
 from collections import Counter
-from entropy_counter import EntropyCounter
+from outcome_counter import OutcomeCounter
 import random
 import numpy
 
@@ -44,16 +44,16 @@ class Dataset():
         return min(self.each_single_attribute_splitter(), key=self.splitter_entropy)
 
     def splitter_entropy(self, splitter):
-        splits = [EntropyCounter(), EntropyCounter()]
+        splits = [OutcomeCounter(), OutcomeCounter()]
         for i in range(self.X.shape[0]):
             splits[splitter.split(self.X[i])].record(self.y[i])
-        return sum(counter.entropy() for counter in splits)
+        return sum(split.entropy() for split in splits)
 
     def split_on(self, splitter):
         splits = [[], []]
         for i in range(self.X.shape[0]):
             splits[splitter.split(self.X[i])].append(i)
-        return [self.take(indexes) for indexes in splits]
+        return [self.take(split) for split in splits]
 
     def outcomes(self):
         return Counter(self.y)

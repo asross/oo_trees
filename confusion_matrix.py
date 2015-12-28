@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import defaultdict
-from entropy_counter import EntropyCounter
+from outcome_counter import OutcomeCounter
 import numpy
 
 class ConfusionMatrix:
@@ -15,7 +15,7 @@ class ConfusionMatrix:
     #
     #     y4  0   0   0   5
     def __init__(self, predictions, realities):
-        self.counts = defaultdict(EntropyCounter)
+        self.counts = defaultdict(OutcomeCounter)
         outcomes = set()
         n_correct = 0
         self.total = 0
