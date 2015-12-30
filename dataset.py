@@ -9,13 +9,19 @@ class SingleAttributeSplitter():
         self.attribute = attribute
         self.value = value
 
-class GreaterThanSplitter(SingleAttributeSplitter):
-    def split(self, point):
-        return point[self.attribute] > self.value
+class GreaterThanOrEqualToSplitter(SingleAttributeSplitter):
+    def split(self, x):
+      return x[self.attribute] >= self.value
+
+    def __str__(self):
+      return "x[{0}] >= {1}".format(self.attribute, self.value)
 
 class IsEqualSplitter(SingleAttributeSplitter):
-    def split(self, point):
-        return point[self.attribute] == self.value
+    def split(self, x):
+      return x[self.attribute] == self.value
+
+    def __str__(self):
+      return "x[{0}] == {1}".format(self.attribute, self.value)
 
 class Dataset():
     def __init__(self, X, y=None, attribute_types=None):
@@ -40,7 +46,7 @@ class Dataset():
             if self.is_numeric(attribute):
                 stddev, maximum, value = values.std(), values.max(), values.min()
                 while value < maximum:
-                    yield GreaterThanSplitter(attribute, value)
+                    yield GreaterThanOrEqualToSplitter(attribute, value)
                     value += stddev / 10.0
             else:
                 for value in numpy.unique(values):
@@ -81,8 +87,8 @@ if __name__ == '__main__':
             X = numpy.array([[0, 1], [0, 0]])
             y = numpy.array(['H', 'T'])
             dataset = Dataset(X, y, [0, 0])
-            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 0)), 1)
-            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 1)), 1)
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 0)), float('inf'))
+            self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(0, 1)), float('inf'))
             self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(1, 0)), 0)
             self.assertEqual(dataset.splitter_entropy(IsEqualSplitter(1, 1)), 0)
 
@@ -122,6 +128,36 @@ if __name__ == '__main__':
             subsplitter = subset1.best_single_attribute_splitter()
             self.assertEqual(subsplitter.attribute, 1)
             self.assertEqual(subsplitter.value, 0)
+
+        def test_more_complicated_splitting(self):
+            # x1  < 0.25 => 'a'
+            # x1 >= 0.25, x2 = 0 => 'b'
+            # x1  < 0.50, x2 = 1 => 'c'
+            # x1 >= 0.50, x2 = 1 => 'a'
+            X = numpy.array([[0.15, 0], [0.232, 1], [0.173, 0], [0.263, 0], [0.671, 0], [0.9, 0], [0.387, 1], [0.482, 1], [0.632, 1], [0.892, 1]])
+            y = numpy.array([      'a',        'a',        'a',        'b',        'b',      'b',        'c',        'c',        'a',        'a'])
+            dataset = Dataset(X, y, [1, 0])
+
+            splitter = dataset.best_single_attribute_splitter()
+            self.assertEqual(splitter.attribute, 0)
+            self.assertGreaterEqual(splitter.value, 0.23)
+            self.assertLess(splitter.value, 0.27)
+            subset1, subset2 = dataset.split_on(splitter)
+            numpy.testing.assert_array_equal(subset1.y, ['a', 'a', 'a'])
+
+            splitter2 = subset2.best_single_attribute_splitter()
+            self.assertEqual(splitter2.attribute, 1)
+            self.assertEqual(splitter2.value, 0)
+            subset21, subset22 = subset2.split_on(splitter2)
+            numpy.testing.assert_array_equal(subset22.y, ['b', 'b', 'b'])
+
+            splitter21 = subset21.best_single_attribute_splitter()
+            self.assertEqual(splitter21.attribute, 0)
+            self.assertGreaterEqual(splitter21.value, 0.482)
+            self.assertLess(splitter21.value, 0.632)
+            subset211, subset212 = subset21.split_on(splitter21)
+            numpy.testing.assert_array_equal(subset211.y, ['c', 'c'])
+            numpy.testing.assert_array_equal(subset212.y, ['a', 'a'])
 
         def test_outcomes(self):
             X = numpy.array([[0, 1], [0, 0], [1, 0]])

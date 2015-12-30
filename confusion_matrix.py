@@ -38,11 +38,11 @@ class ConfusionMatrix:
 
     def true_negatives(self, outcome):
         return sum(self.counts[o].total - self.counts[o][outcome]
-            for o in self.outcomes if o is not outcome)
+            for o in self.outcomes if o != outcome)
 
     def false_positives(self, outcome):
         return sum(self.counts[o][outcome]
-            for o in self.outcomes if o is not outcome)
+            for o in self.outcomes if o != outcome)
 
     def false_negatives(self, outcome):
         return self.counts[outcome].total - self.counts[outcome][outcome]
@@ -89,6 +89,17 @@ if __name__ == '__main__':
             numpy.testing.assert_almost_equal(cm.sensitivity_for(1), 1/3.0)
             numpy.testing.assert_almost_equal(cm.sensitivity_for(0), 1)
             numpy.testing.assert_almost_equal(cm.sensitivity(), 11/18.0)
+
+        def test_more_complicated_case(self):
+            pred = numpy.array(['a', 'a', 'c', 'c', 'a', 'b', 'b', 'a', 'c', 'c'])
+            real = numpy.array(['a', 'a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c'])
+            cm = ConfusionMatrix(pred, real)
+            numpy.testing.assert_almost_equal(cm.sensitivity_for('a'), 1/2.0)
+            numpy.testing.assert_almost_equal(cm.sensitivity_for('b'), 2/3.0)
+            numpy.testing.assert_almost_equal(cm.sensitivity_for('c'), 2/3.0)
+            numpy.testing.assert_almost_equal(cm.specificity_for('a'), 4/6.0)
+            numpy.testing.assert_almost_equal(cm.specificity_for('b'), 1)
+            numpy.testing.assert_almost_equal(cm.specificity_for('c'), 5/7.0)
 
         def test_to_array(self):
             cm = ConfusionMatrix([0, 0, 2, 2, 0, 2],

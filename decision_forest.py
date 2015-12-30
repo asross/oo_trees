@@ -1,7 +1,8 @@
 from collections import Counter
+from classifier import Classifier
 from axis_aligned_decision_tree import AxisAlignedDecisionTree
 
-class DecisionForest:
+class DecisionForest(Classifier):
     def __init__(self, dataset, tree_class=None, n_trees=None, n_points=None):
         if n_trees is None: n_trees = 50 # TODO -- how many?
         if n_points is None: n_points = len(dataset.points)
@@ -9,12 +10,12 @@ class DecisionForest:
 
         self.trees = [tree_class(dataset.bootstrap(n_points)) for _i in range(n_trees)]
 
-    def vote_on(self, point):
+    def vote_on(self, x):
         # TODO: we could return early as soon as we have a definite plurality
-        return Counter(tree.classify(point) for tree in self.trees)
+        return Counter(tree.classify(x) for tree in self.trees)
 
-    def classify(self, point):
-        return self.vote_on(point).most_common(1)[0][0]
+    def classify(self, x):
+        return self.vote_on(x).most_common(1)[0][0]
 
 if __name__ == '__main__':
     import unittest
