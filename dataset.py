@@ -25,6 +25,12 @@ class Dataset():
         if attribute_types is None:
             self.attribute_types = numpy.full(self.X.shape[1], 0)
 
+        lx1, lx2 = self.X.shape
+        if len(self.y) != lx1:
+            raise ValueError("y ({0}) must have same length as X ({1})".format(len(y), lx1))
+        if len(self.attribute_types) != lx2:
+            raise ValueError("attribute_types ({0}) must have same length as X[i] ({1})".format(len(attribute_types), lx2))
+
     def is_numeric(self, attribute):
         return self.attribute_types[attribute]
 
