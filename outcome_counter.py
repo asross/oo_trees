@@ -18,10 +18,7 @@ class OutcomeCounter():
         return self.counter.keys()
 
     def entropy(self):
-        if self.total == 0:
-            return float('inf')
-        else:
-            return sum(self.entropy_of(outcome) for outcome in self.outcomes())
+        return sum(self.entropy_of(outcome) for outcome in self.outcomes())
 
     def __getitem__(self, outcome):
         return self.counter[outcome]

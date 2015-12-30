@@ -2,13 +2,12 @@ from classifier import Classifier
 
 class AxisAlignedDecisionTree(Classifier):
     def __init__(self, dataset):
-        outcomes = dataset.outcomes()
-        self.most_common_outcome = outcomes.most_common(1)[0][0]
+        self.outcome_distribution = dataset.outcome_counts.counter
 
         # split until we have unanimity in either X or y
         self.splitter = None
         self.branches = []
-        if len(outcomes) > 1:
+        if len(self.outcome_distribution) > 1:
             splitter = dataset.best_single_attribute_splitter()
             subset1, subset2 = dataset.split_on(splitter)
             if len(subset1.y) and len(subset2.y):
@@ -19,7 +18,7 @@ class AxisAlignedDecisionTree(Classifier):
         if self.splitter:
             return self.branches[self.splitter.split(x)].classify(x)
         else:
-            return self.most_common_outcome
+            return self.outcome_distribution.most_common(1)[0][0]
 
 if __name__ == '__main__':
     import unittest
