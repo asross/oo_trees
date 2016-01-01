@@ -27,9 +27,7 @@ class Dataset():
     def __init__(self, X, y=None, attribute_types=None):
         self.X = X
         self.y = y
-        self.outcome_counts = OutcomeCounter()
-        for outcome in y:
-          self.outcome_counts.record(outcome)
+        self.outcome_counter = OutcomeCounter(y)
         self.attribute_types = attribute_types
         if attribute_types is None:
             self.attribute_types = numpy.full(self.X.shape[1], 0)
@@ -43,44 +41,47 @@ class Dataset():
     def is_numeric(self, attribute):
         return self.attribute_types[attribute]
 
+    def __len__(self):
+        return self.X.shape[0]
+
     def each_single_attribute_splitter(self):
         for attribute in range(self.X.shape[1]):
             values = self.X[:, attribute]
             if self.is_numeric(attribute):
                 stddev, maximum, value = values.std(), values.max(), values.min()
-                while value < maximum:
-                    yield GreaterThanOrEqualToSplitter(attribute, value)
-                    value += stddev / 10.0
+                if maximum != value:
+                    while value < maximum:
+                        yield GreaterThanOrEqualToSplitter(attribute, value)
+                        value += stddev / 10.0
             else:
-                for value in numpy.unique(values):
-                    yield IsEqualSplitter(attribute, value)
+                unique_values = numpy.unique(values)
+                if len(unique_values) > 1:
+                    for value in unique_values:
+                        yield IsEqualSplitter(attribute, value)
 
     def best_single_attribute_splitter(self):
-       return min(self.each_single_attribute_splitter(), key=self.splitter_entropy)
+        try:
+            return min(self.each_single_attribute_splitter(), key=self.splitter_entropy)
+        except ValueError: # no splitters
+            return None
 
     def splitter_entropy(self, splitter):
         splits = defaultdict(OutcomeCounter)
-        for i in range(self.X.shape[0]):
+        for i in range(len(self)):
             splits[splitter.split(self.X[i])].record(self.y[i])
-        return sum(s.entropy() * (s.total / float(self.X.shape[0])) for s in splits.values())
+        return sum(s.weighted_entropy() for s in splits.values()) / float(len(self))
 
     def split_on(self, splitter):
-        splits = [[], []]
-        for i in range(self.X.shape[0]):
+        splits = defaultdict(list)
+        for i in range(len(self)):
             splits[splitter.split(self.X[i])].append(i)
-        return [self.take(split) for split in splits]
-
-    def entropy(self):
-        return self.outcome_counts.entropy()
+        return map(self.take, splits.values())
 
     def take(self, indices):
         return self.__class__(self.X.take(indices, 0), self.y.take(indices), self.attribute_types)
 
-    def bootstrap(self, n_points=None):
-        indices = []
-        for _i in range(n_points or self.X.shape[0]):
-            indices.append(random.randrange(self.X.shape[0]))
-        return self.take(indices)
+    def bootstrap(self, n=None):
+        return self.take([random.randrange(len(self)) for _i in range(n or len(self))])
 
 if __name__ == '__main__':
     import unittest
@@ -158,7 +159,7 @@ if __name__ == '__main__':
             X = numpy.array([[0, 1], [0, 0], [1, 0]])
             y = numpy.array(['H', 'T', 'T'])
             dataset = Dataset(X, y)
-            outcomes = dataset.outcome_counts
+            outcomes = dataset.outcome_counter
             self.assertEqual(outcomes.counter.most_common(), [('T', 2), ('H', 1)])
 
         def test_bootstrap(self):

@@ -19,8 +19,6 @@ Classifier
     - AxisAlignedDecisionTree
     - CanonicalCorrelationTree
 
-
-
 IDEAS:
 
 ## Probability Distribution Tree
@@ -30,10 +28,27 @@ What if you had a decision tree where, instead of returning a class, you return 
 E.g. at each node splitter returns a value `p` between 0 and 1, and at each leaf node you return a distribution of outcomes instead of just one. Then you combine them like:
 
 ```
-p * true_branch.outcome_distribution + (1-p) * false_branch.outcome_distribution
+if branches:
+    p = splitter.split(x)
+    return p * true_branch.classify(x) + (1-p) * false_branch.classify(x)
+else:
+    return outcome_distribution
 ```
 
 Perhaps the value of `p` should in some way be related to the quantity of information gained from the split. If you have a very informative split, p should be very close to 1, but if you learn little it should be closer to 0.5
+
+## Less Greedy Splitting
+
+We will run up against combinatorical explosions if we try every possible set of splits, butif we are going to split multiple times, perhaps it is better to choose a set of splits that maximizes information gain over multiple levels.
+
+E.g., instead of minimizing
+```
+len(a) * Entropy(a) + len(b) * Entropy(b)
+```
+Perhaps we want to minimize
+```
+len(aa) * Entropy(aa) + len(ab) * Entropy(ab) + len(ba) * Entropy(ba) + len(bb) * Entropy(bb)
+```
 
 ## CCA only for numerical attributes
 
