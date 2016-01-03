@@ -5,13 +5,10 @@ class AxisAlignedDecisionTree(Classifier):
         self.outcome_counter = dataset.outcome_counter
 
         # split until we have unanimity in either X or y
-        self.splitter = None
-        self.branches = []
-        if not self.outcome_counter.is_unanimous():
-            splitter = dataset.best_single_attribute_splitter()
-            if splitter:
-                self.splitter = splitter
-                self.branches = map(self.__class__, dataset.split_on(splitter))
+        self.splitter = dataset.best_single_attribute_splitter()
+        self.branches = {}
+        if self.splitter:
+            self.branches = { value: self.__class__(subset) for value, subset in dataset.split_on(self.splitter).items() }
 
     def classify(self, x):
         if self.splitter:

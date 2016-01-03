@@ -22,9 +22,6 @@ class OutcomeCounter():
     def entropy(self):
         return sum(map(self.entropy_of, self.outcomes()))
 
-    def weighted_entropy(self):
-        return self.total * self.entropy()
-
     def is_unanimous(self):
         return len(self.counter) == 1
 
@@ -33,9 +30,6 @@ class OutcomeCounter():
 
     def __getitem__(self, outcome):
         return self.counter[outcome]
-
-    def __len__(self):
-        return self.total
 
 if __name__ == '__main__':
     import unittest

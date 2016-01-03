@@ -6,45 +6,44 @@ import random
 import numpy
 
 class Dataset():
-    def __init__(self, X, y=None, attributes=None):
+    def __init__(self, X, y, attributes=None):
         self.X = X
         self.y = y
         self.outcome_counter = OutcomeCounter(y)
-        self.attributes = attributes
-        if attributes is None:
-            self.attributes = [CategoricalAttribute(i) for i in range(self.X.shape[1])]
-
-        lx1, lx2 = self.X.shape
-        if len(self.y) != lx1:
-            raise ValueError("y ({0}) must have same length as X ({1})".format(len(y), lx1))
-        if len(self.attributes) != lx2:
-            raise ValueError("attributes ({0}) must have same length as X[i] ({1})".format(len(attributes), lx2))
+        self.attributes = attributes or map(CategoricalAttribute, range(X.shape[1]))
+        assert self.X.shape[0] == len(y), "len(y) must match len(X)"
+        assert self.X.shape[1] == len(self.attributes), "len(attributes) must match len(X[i])"
 
     def __len__(self):
         return self.X.shape[0]
 
+    def entropy(self):
+        return self.outcome_counter.entropy()
+
     def each_single_attribute_splitter(self):
-        for attribute in self.attributes:
-            for splitter in attribute.each_splitter(self.X[:, attribute.index]):
-                yield splitter
+        if not self.outcome_counter.is_unanimous():
+            for attribute in self.attributes:
+                for splitter in attribute.each_splitter(self.X[:, attribute.index]):
+                    yield splitter
 
     def best_single_attribute_splitter(self):
-        try:
-            return min(self.each_single_attribute_splitter(), key=self.splitter_entropy)
-        except ValueError: # no splitters
-            return None
+        best_splitter = None
+        min_entropy = float('inf')
+        for splitter in self.each_single_attribute_splitter():
+            entropy = self.splitter_entropy(splitter)
+            if entropy < min_entropy:
+                best_splitter = splitter
+                min_entropy = entropy
+        return best_splitter
 
     def splitter_entropy(self, splitter):
-        splits = defaultdict(OutcomeCounter)
-        for i in range(len(self)):
-            splits[splitter.split(self.X[i])].record(self.y[i])
-        return sum(s.weighted_entropy() for s in splits.values()) / float(len(self))
+        return sum(len(d) *  d.entropy() for d in self.split_on(splitter).values()) / float(len(self))
 
     def split_on(self, splitter):
         splits = defaultdict(list)
         for i in range(len(self)):
             splits[splitter.split(self.X[i])].append(i)
-        return map(self.take, splits.values())
+        return { value: self.take(indices) for value, indices in splits.items() }
 
     def take(self, indices):
         return self.__class__(self.X.take(indices, 0), self.y.take(indices), self.attributes)
@@ -92,7 +91,7 @@ if __name__ == '__main__':
             self.assertGreaterEqual(splitter.value, 0.45)
             self.assertLess(splitter.value, 0.52)
 
-            subset1, subset2 = dataset.split_on(splitter)
+            subset1, subset2 = dataset.split_on(splitter).values()
             subsplitter = subset1.best_single_attribute_splitter()
             self.assertEqual(subsplitter.attribute.index, 1)
             self.assertEqual(subsplitter.value, 0)
@@ -110,20 +109,20 @@ if __name__ == '__main__':
             self.assertEqual(splitter.attribute.index, 0)
             self.assertGreaterEqual(splitter.value, 0.23)
             self.assertLess(splitter.value, 0.27)
-            subset1, subset2 = dataset.split_on(splitter)
+            subset1, subset2 = dataset.split_on(splitter).values()
             numpy.testing.assert_array_equal(subset1.y, ['a', 'a', 'a', 'a', 'a'])
 
             splitter2 = subset2.best_single_attribute_splitter()
             self.assertEqual(splitter2.attribute.index, 1)
             self.assertEqual(splitter2.value, 0)
-            subset21, subset22 = subset2.split_on(splitter2)
+            subset21, subset22 = subset2.split_on(splitter2).values()
             numpy.testing.assert_array_equal(subset22.y, ['b', 'b', 'b'])
 
             splitter21 = subset21.best_single_attribute_splitter()
             self.assertEqual(splitter21.attribute.index, 0)
             self.assertGreaterEqual(splitter21.value, 0.482)
             self.assertLess(splitter21.value, 0.632)
-            subset211, subset212 = subset21.split_on(splitter21)
+            subset211, subset212 = subset21.split_on(splitter21).values()
             numpy.testing.assert_array_equal(subset211.y, ['c', 'c'])
             numpy.testing.assert_array_equal(subset212.y, ['a', 'a'])
 
