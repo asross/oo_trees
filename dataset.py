@@ -27,9 +27,12 @@ class Dataset():
                     yield splitter
 
     def best_single_attribute_splitter(self):
+        return self.best_splitter(self.each_single_attribute_splitter())
+
+    def best_splitter(self, splitters):
         best_splitter = None
         min_entropy = float('inf')
-        for splitter in self.each_single_attribute_splitter():
+        for splitter in splitters:
             entropy = self.splitter_entropy(splitter)
             if entropy < min_entropy:
                 best_splitter = splitter

@@ -1,20 +1,12 @@
-from classifier import Classifier
+from decision_tree import DecisionTree
 
-class AxisAlignedDecisionTree(Classifier):
-    def __init__(self, dataset):
-        self.outcome_counter = dataset.outcome_counter
-
+class AxisAlignedDecisionTree(DecisionTree):
+    def grow_branches(self, dataset):
         # split until we have unanimity in either X or y
         self.splitter = dataset.best_single_attribute_splitter()
-        self.branches = {}
         if self.splitter:
-            self.branches = { value: self.__class__(subset) for value, subset in dataset.split_on(self.splitter).items() }
-
-    def classify(self, x):
-        if self.splitter:
-            return self.branches[self.splitter.split(x)].classify(x)
-        else:
-            return self.outcome_counter.most_common_value()
+            self.branches = { value: self.__class__(subset)
+                for value, subset in dataset.split_on(self.splitter).items() }
 
 if __name__ == '__main__':
     import unittest
