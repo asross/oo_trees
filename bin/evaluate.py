@@ -1,13 +1,16 @@
 import os
 import csv
 import numpy
-import sys
-sys.path.append('.')
+import sys; sys.path.append('.')
 from dataset import *
 from attribute import *
 from axis_aligned_decision_tree import *
+from decision_forest import *
+import datetime
 
 def evaluate(filename, classifier_class):
+    t = datetime.datetime.now()
+
     # Convert CSV to numpy arrays of X and y
     X = []
     y = []
@@ -35,7 +38,13 @@ def evaluate(filename, classifier_class):
 
     classifier = classifier_class(training_dataset)
     performance = classifier.performance_on(test_dataset)
+    time = datetime.datetime.now() - t
+    print 'done in ', time, ' seconds'
+    print 'for ', filename.split('/')[-1], ' accuracy of ', classifier_class, ' was:'
     print performance.accuracy
     print performance.to_array()
 
 evaluate('./ccf/Datasets/soybean.csv', AxisAlignedDecisionTree)
+
+def forest(dataset): return DecisionForest(dataset, n_processes=20)
+evaluate('./ccf/Datasets/soybean.csv', forest)
