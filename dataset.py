@@ -41,7 +41,10 @@ class Dataset():
         return best_splitter
 
     def splitter_entropy(self, splitter):
-        return sum(len(d) *  d.entropy() for d in self.split_on(splitter).values()) / float(len(self))
+        splits = defaultdict(OutcomeCounter)
+        for i in range(len(self)):
+            splits[splitter.split(self.X[i])].record(self.y[i])
+        return sum(y.total * y.entropy() for y in splits.values()) / float(len(self))
 
     def split_on(self, splitter):
         splits = defaultdict(list)
