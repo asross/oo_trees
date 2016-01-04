@@ -1,14 +1,18 @@
 from collections import Counter
 from classifier import Classifier
 from axis_aligned_decision_tree import AxisAlignedDecisionTree
+import multiprocessing
+
+def grow_tree(tree_class, dataset, n):
+    return tree_class(dataset.bootstrap(n))
 
 class DecisionForest(Classifier):
-    def __init__(self, dataset, tree_class=None, n_trees=None, n_points=None):
-        if n_trees is None: n_trees = 50 # TODO -- how many?
-        if n_points is None: n_points = len(dataset.points)
-        if tree_class is None: tree_class = AxisAlignedDecisionTree
-
-        self.trees = [tree_class(dataset.bootstrap(n_points)) for _i in range(n_trees)]
+    def __init__(self, dataset, tree_class=AxisAlignedDecisionTree, n_trees=200, n_points=None, n_processes=1):
+        if n_processes == 1:
+            self.trees = [tree_class(dataset.bootstrap(n_points)) for _i in range(n_trees)]
+        else:
+            pool = multiprocessing.Pool(processes=n_processes)
+            self.trees = [pool.apply(grow_tree, (tree_class, dataset, n_points)) for _i in range(n_trees)]
 
     def vote_on(self, x):
         # TODO: we could return early as soon as we have a definite plurality
