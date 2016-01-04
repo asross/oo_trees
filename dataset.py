@@ -30,6 +30,7 @@ class Dataset():
         return self.best_splitter(self.each_single_attribute_splitter())
 
     def best_splitter(self, splitters):
+        # in python 3+, this could just be `return min(splitters, key=self.splitter_entropy, default=None)`
         best_splitter = None
         min_entropy = float('inf')
         for splitter in splitters:
