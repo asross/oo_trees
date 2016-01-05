@@ -8,9 +8,10 @@ from axis_aligned_decision_tree import *
 from decision_forest import *
 import datetime
 
-def evaluate(filename, classifier_class):
-    t = datetime.datetime.now()
+def parallel_forest(dataset):
+    return DecisionForest(dataset, n_processes=10)
 
+def generate_dataset(filename):
     # Convert CSV to numpy arrays of X and y
     X = []
     y = []
@@ -32,19 +33,28 @@ def evaluate(filename, classifier_class):
         else:
             attributes.append(NumericAttribute(i))
 
-    # initialize the dataset
-    dataset = Dataset(X, y, attributes)
-    training_dataset, test_dataset = dataset.training_test_split(0.7)
+    return Dataset(X, y, attributes)
 
+def evaluate(classifier_class, training_dataset, test_dataset):
+    t = datetime.datetime.now()
     classifier = classifier_class(training_dataset)
     performance = classifier.performance_on(test_dataset)
     time = datetime.datetime.now() - t
-    print 'done in ', time, ' seconds'
-    print 'for ', filename.split('/')[-1], ' accuracy of ', classifier_class, ' was:'
+    print 'done in', time
+    print 'accuracy of', classifier_class, 'was:'
     print performance.accuracy
     print performance.to_array()
 
-evaluate('./ccf/Datasets/soybean.csv', AxisAlignedDecisionTree)
+def compare(classifier_class1, classifier_class2, dataset):
+    training_dataset, test_dataset = dataset.training_test_split(0.75)
+    evaluate(classifier_class1, training_dataset, test_dataset)
+    evaluate(classifier_class2, training_dataset, test_dataset)
 
-def forest(dataset): return DecisionForest(dataset, n_processes=20)
-evaluate('./ccf/Datasets/soybean.csv', forest)
+dataset_path = './ccf/Datasets'
+dataset_files = os.listdir(dataset_path)
+for dataset_file in dataset_files:
+    print dataset_file
+    dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
+    training_dataset, test_dataset = dataset.training_test_split(0.75)
+    evaluate(AxisAlignedDecisionTree, training_dataset, test_dataset)
+    print ""
