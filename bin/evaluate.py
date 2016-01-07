@@ -35,12 +35,11 @@ def generate_dataset(filename):
 
     return Dataset(X, y, attributes)
 
+import cProfile
 def evaluate(classifier_class, training_dataset, test_dataset):
-    t = datetime.datetime.now()
-    classifier = classifier_class(training_dataset)
+    print 'profiling generation of ', classifier_class
+    cProfile.run("classifier = AxisAlignedDecisionTree(training_dataset)")
     performance = classifier.performance_on(test_dataset)
-    time = datetime.datetime.now() - t
-    print 'done in', time
     print 'accuracy of', classifier_class, 'was:'
     print performance.accuracy
     print performance.to_array()
