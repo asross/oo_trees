@@ -12,7 +12,7 @@ def parallel_forest(dataset):
     return DecisionForest(dataset, n_processes=10)
 
 def aa_decision_tree(dataset):
-    return AxisAlignedDecisionTree(dataset, min_samples_split=10)
+    return AxisAlignedDecisionTree(dataset, min_samples_split=10, max_depth=100)
 
 def generate_dataset(filename):
     # Convert CSV to numpy arrays of X and y

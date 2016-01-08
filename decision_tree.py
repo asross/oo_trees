@@ -1,13 +1,21 @@
 from classifier import Classifier
 
 class DecisionTree(Classifier):
-    def __init__(self, dataset, min_samples_split=2):
+    def __init__(self, dataset, min_samples_split=2, max_depth=float('inf'), depth=1):
+        self.depth = depth
+        self.max_depth = max_depth
         self.min_samples_split = min_samples_split
         self.outcome_counter = dataset.outcome_counter
         self.branches = {}
         self.splitter = None
-        if len(dataset) >= min_samples_split:
+        if max_depth > depth and len(dataset) >= min_samples_split:
             self.grow_branches(dataset)
+
+    def new_branch(self, dataset):
+        return self.__class__(dataset,
+                min_samples_split=self.min_samples_split,
+                max_depth=self.max_depth,
+                depth=self.depth+1)
 
     def grow_branches(self, dataset):
         raise NotImplementedError

@@ -5,7 +5,7 @@ class AxisAlignedDecisionTree(DecisionTree):
         # split until we have unanimity in either X or y
         self.splitter = dataset.best_single_attribute_splitter()
         if self.splitter:
-            self.branches = { value: self.__class__(subset, self.min_samples_split)
+            self.branches = { value: self.new_branch(subset)
                 for value, subset in dataset.split_on(self.splitter).items() }
 
 if __name__ == '__main__':
@@ -39,6 +39,18 @@ if __name__ == '__main__':
             tree = AxisAlignedDecisionTree(dataset, min_samples_split=0)
             self.assertEqual(len(tree.branches), 2)
             tree = AxisAlignedDecisionTree(dataset, min_samples_split=5)
+            self.assertEqual(len(tree.branches), 0)
+            self.assertEqual(tree.leaf_value(), 'T')
+
+        def test_max_depth(self):
+            X = numpy.array([[0], [1], [1]])
+            y = numpy.array(['H', 'T', 'T'])
+            dataset = Dataset(X, y)
+            tree = AxisAlignedDecisionTree(dataset, max_depth=3)
+            self.assertEqual(len(tree.branches), 2)
+            numpy.testing.assert_array_equal([2, 2],
+                    [t.depth for t in tree.branches.values()])
+            tree = AxisAlignedDecisionTree(dataset, max_depth=1)
             self.assertEqual(len(tree.branches), 0)
             self.assertEqual(tree.leaf_value(), 'T')
 
