@@ -55,11 +55,11 @@ class Dataset():
     def take(self, indices):
         return self.__class__(self.X.take(indices, 0), self.y.take(indices), self.attributes)
 
-    def training_test_split(self, fraction_training):
-        n_training_examples = int(len(self) * fraction_training)
+    def random_split(self, fraction):
+        n_examples = int(len(self) * fraction)
         indices = range(len(self))
         random.shuffle(indices)
-        return self.take(indices[:n_training_examples]), self.take(indices[n_training_examples:])
+        return self.take(indices[:n_examples]), self.take(indices[n_examples:])
 
     def bootstrap(self, n=None):
         return self.take([random.randrange(len(self)) for _i in range(n or len(self))])

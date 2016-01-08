@@ -57,6 +57,6 @@ dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
     print dataset_file
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
-    training_dataset, test_dataset = dataset.training_test_split(0.75)
+    training_dataset, test_dataset = dataset.random_split(0.75)
     evaluate(aa_decision_tree, training_dataset, test_dataset)
     print ""
