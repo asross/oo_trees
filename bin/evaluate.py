@@ -11,6 +11,9 @@ import datetime
 def parallel_forest(dataset):
     return DecisionForest(dataset, n_processes=10)
 
+def aa_decision_tree(dataset):
+    return AxisAlignedDecisionTree(dataset, min_samples_split=10)
+
 def generate_dataset(filename):
     # Convert CSV to numpy arrays of X and y
     X = []
@@ -55,5 +58,5 @@ for dataset_file in dataset_files:
     print dataset_file
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
     training_dataset, test_dataset = dataset.training_test_split(0.75)
-    evaluate(AxisAlignedDecisionTree, training_dataset, test_dataset)
+    evaluate(aa_decision_tree, training_dataset, test_dataset)
     print ""

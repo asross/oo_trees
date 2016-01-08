@@ -5,7 +5,7 @@ class AxisAlignedDecisionTree(DecisionTree):
         # split until we have unanimity in either X or y
         self.splitter = dataset.best_single_attribute_splitter()
         if self.splitter:
-            self.branches = { value: self.__class__(subset)
+            self.branches = { value: self.__class__(subset, self.min_samples_split)
                 for value, subset in dataset.split_on(self.splitter).items() }
 
 if __name__ == '__main__':
@@ -31,6 +31,16 @@ if __name__ == '__main__':
             self.assertEqual(tree.classify([1, 0]), 'H')
             self.assertEqual(tree.classify([1, 1]), 'T')
             self.assertEqual(tree.classify([2, 0]), 'H') # it can handle unknown values too
+
+        def test_min_points(self):
+            X = numpy.array([[0], [1], [1]])
+            y = numpy.array(['H', 'T', 'T'])
+            dataset = Dataset(X, y)
+            tree = AxisAlignedDecisionTree(dataset, min_samples_split=0)
+            self.assertEqual(len(tree.branches), 2)
+            tree = AxisAlignedDecisionTree(dataset, min_samples_split=5)
+            self.assertEqual(len(tree.branches), 0)
+            self.assertEqual(tree.leaf_value(), 'T')
 
         def test_performance_on(self):
             # x1  < 0.25 => 'a'
