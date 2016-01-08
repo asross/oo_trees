@@ -20,6 +20,11 @@ class DecisionTree(Classifier):
     def grow_branches(self, dataset):
         raise NotImplementedError
 
+    def depth_order_traversal(self):
+        for branch in self.branches.values():
+            branch.depth_order_traversal()
+        yield self
+
     def branch_for(self, x):
         # we are a leaf node unless we have a splitter
         if self.splitter:

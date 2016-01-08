@@ -5,6 +5,7 @@ import sys; sys.path.append('.')
 from dataset import *
 from attribute import *
 from axis_aligned_decision_tree import *
+from pruned_decision_tree import *
 from decision_forest import *
 import datetime
 
@@ -40,23 +41,22 @@ def generate_dataset(filename):
 
 import cProfile
 def evaluate(classifier_class, training_dataset, test_dataset):
-    print 'profiling generation of ', classifier_class
-    cProfile.run("classifier = AxisAlignedDecisionTree(training_dataset)")
+    classifier = classifier_class(training_dataset)
     performance = classifier.performance_on(test_dataset)
     print 'accuracy of', classifier_class, 'was:'
     print performance.accuracy
     print performance.to_array()
 
 def compare(classifier_class1, classifier_class2, dataset):
-    training_dataset, test_dataset = dataset.training_test_split(0.75)
-    evaluate(classifier_class1, training_dataset, test_dataset)
-    evaluate(classifier_class2, training_dataset, test_dataset)
+    training_dataset, test_dataset = dataset.random_split(0.75)
+    p1 = evaluate(classifier_class1, training_dataset, test_dataset)
+    p2 = evaluate(classifier_class2, training_dataset, test_dataset)
+    print 'accuracy of', classifier_class1, 'was:', p1
+    print 'accuracy of', classifier_class2, 'was:', p2
 
 dataset_path = './ccf/Datasets'
 dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
-    print dataset_file
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
-    training_dataset, test_dataset = dataset.random_split(0.75)
-    evaluate(aa_decision_tree, training_dataset, test_dataset)
+    compare(aa_decision_tree, PrunedDecisionTree, dataset)
     print ""
