@@ -22,7 +22,8 @@ class Dataset():
 
     def each_single_attribute_splitter(self):
         if not self.outcome_counter.is_unanimous():
-            for attribute in self.attributes:
+            #for attribute in self.attributes:
+            for attribute in random.sample(self.attributes, int(numpy.ceil(numpy.sqrt(len(self.attributes))))):
                 for splitter in attribute.each_splitter(self.X[:, attribute.index]):
                     yield splitter
 

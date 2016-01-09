@@ -8,12 +8,16 @@ from axis_aligned_decision_tree import *
 from pruned_decision_tree import *
 from decision_forest import *
 import datetime
-
-def parallel_forest(dataset):
-    return DecisionForest(dataset, n_processes=10)
+import cProfile
 
 def aa_decision_tree(dataset):
     return AxisAlignedDecisionTree(dataset, min_samples_split=10, max_depth=100)
+
+def pruned_aa_decision_tree(dataset):
+    return PrunedDecisionTree(dataset, tree_class=aa_decision_tree, split_fraction=0.75)
+
+def parallel_forest(dataset):
+    return DecisionForest(dataset, n_processes=1, n_trees=50, tree_class=aa_decision_tree)
 
 def generate_dataset(filename):
     # Convert CSV to numpy arrays of X and y
@@ -39,24 +43,29 @@ def generate_dataset(filename):
 
     return Dataset(X, y, attributes)
 
-import cProfile
 def evaluate(classifier_class, training_dataset, test_dataset):
+    t1 = datetime.datetime.now()
     classifier = classifier_class(training_dataset)
+    t2 = datetime.datetime.now()
+    print 'took', t2-t1, 'to generate', classifier_class
     performance = classifier.performance_on(test_dataset)
     print 'accuracy of', classifier_class, 'was:'
     print performance.accuracy
     print performance.to_array()
 
-def compare(classifier_class1, classifier_class2, dataset):
+def compare(classifier_classes, dataset):
     training_dataset, test_dataset = dataset.random_split(0.75)
-    p1 = evaluate(classifier_class1, training_dataset, test_dataset)
-    p2 = evaluate(classifier_class2, training_dataset, test_dataset)
-    print 'accuracy of', classifier_class1, 'was:', p1
-    print 'accuracy of', classifier_class2, 'was:', p2
+    for classifier_class in classifier_classes:
+        evaluate(classifier_class, training_dataset, test_dataset)
 
 dataset_path = './ccf/Datasets'
 dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
+    if dataset_file.startswith('hill'): continue
+    if dataset_file.startswith('letter'): continue
+    print "*******************"
+    print dataset_file
+    print "*******************"
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
-    compare(aa_decision_tree, PrunedDecisionTree, dataset)
+    compare([aa_decision_tree, pruned_aa_decision_tree, parallel_forest], dataset)
     print ""
