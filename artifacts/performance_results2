@@ -1,0 +1,85 @@
+*******************
+balanceScale.csv
+*******************
+took 0:00:00.064122 to generate <function aa_decision_tree at 0x10423f9b0>
+accuracy of <function aa_decision_tree at 0x10423f9b0> was:
+0.707006369427
+[[ 0  8  6]
+ [ 7 65  5]
+ [ 1 19 46]]
+took 0:00:00.045155 to generate <function pruned_aa_decision_tree at 0x10423f848>
+accuracy of <function pruned_aa_decision_tree at 0x10423f848> was:
+0.770700636943
+[[ 0  7  7]
+ [ 2 65 10]
+ [ 1  9 56]]
+took 0:00:03.151200 to generate <function parallel_forest at 0x10423f488>
+accuracy of <function parallel_forest at 0x10423f488> was:
+0.828025477707
+[[ 0  4 10]
+ [ 0 70  7]
+ [ 0  6 60]]
+
+*******************
+banknote.csv
+*******************
+took 0:00:00.710300 to generate <function aa_decision_tree at 0x10423f9b0>
+accuracy of <function aa_decision_tree at 0x10423f9b0> was:
+0.97667638484
+[[202   2]
+ [  6 133]]
+took 0:00:00.653818 to generate <function pruned_aa_decision_tree at 0x10423f848>
+accuracy of <function pruned_aa_decision_tree at 0x10423f848> was:
+0.965014577259
+[[201   3]
+ [  9 130]]
+took 0:00:37.659417 to generate <function parallel_forest at 0x10423f488>
+accuracy of <function parallel_forest at 0x10423f488> was:
+0.997084548105
+[[203   1]
+ [  0 139]]
+
+*******************
+breastTissue.csv
+*******************
+took 0:00:00.091054 to generate <function aa_decision_tree at 0x10423f9b0>
+accuracy of <function aa_decision_tree at 0x10423f9b0> was:
+0.666666666667
+[[5 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 4 0 1 0]
+ [0 0 0 0 0 5]
+ [0 0 0 0 1 2]
+ [0 1 0 0 0 1]]
+took 0:00:00.068542 to generate <function pruned_aa_decision_tree at 0x10423f848>
+accuracy of <function pruned_aa_decision_tree at 0x10423f848> was:
+0.62962962963
+[[5 0 0 0 0 0]
+ [0 6 1 0 0 0]
+ [0 0 5 0 0 0]
+ [0 0 0 0 0 5]
+ [0 0 0 0 0 3]
+ [0 1 0 0 0 1]]
+took 0:00:04.327916 to generate <function parallel_forest at 0x10423f488>
+accuracy of <function parallel_forest at 0x10423f488> was:
+0.703703703704
+[[5 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 5 0 0 0]
+ [0 0 0 0 0 5]
+ [0 0 0 1 1 1]
+ [0 1 0 0 0 1]]
+
+*******************
+ILPD.csv
+*******************
+took 0:00:01.547817 to generate <function aa_decision_tree at 0x10423f9b0>
+accuracy of <function aa_decision_tree at 0x10423f9b0> was:
+0.616438356164
+[[82 20]
+ [36  8]]
+took 0:00:01.065533 to generate <function pruned_aa_decision_tree at 0x10423f848>
+accuracy of <function pruned_aa_decision_tree at 0x10423f848> was:
+0.698630136986
+[[102   0]
+ [ 44   0]]
