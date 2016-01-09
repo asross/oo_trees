@@ -1,0 +1,718 @@
+*******************
+balanceScale.csv
+*******************
+took 0:00:00.083716 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.789808917197
+[[ 0  7  7]
+ [ 3 55  5]
+ [ 3  8 69]]
+took 0:00:00.059794 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.770700636943
+[[ 1  6  7]
+ [ 7 51  5]
+ [ 3  8 69]]
+took 0:00:03.582400 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.853503184713
+[[ 0  7  7]
+ [ 1 57  5]
+ [ 0  3 77]]
+
+*******************
+banknote.csv
+*******************
+took 0:00:00.801964 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.99416909621
+[[186   1]
+ [  1 155]]
+took 0:00:00.665146 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.98250728863
+[[184   3]
+ [  3 153]]
+took 0:00:43.298096 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+1.0
+[[187   0]
+ [  0 156]]
+
+*******************
+breastTissue.csv
+*******************
+took 0:00:00.114013 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.666666666667
+[[4 0 0 0 0 0]
+ [0 5 0 1 0 0]
+ [1 0 2 0 0 0]
+ [0 1 0 2 1 1]
+ [0 0 0 1 3 2]
+ [0 0 0 0 1 2]]
+took 0:00:00.102808 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.407407407407
+[[2 1 0 0 0 1]
+ [1 0 0 0 0 5]
+ [1 0 1 0 0 1]
+ [0 0 0 2 1 2]
+ [0 0 0 0 5 1]
+ [0 0 0 1 1 1]]
+took 0:00:04.703420 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.740740740741
+[[4 0 0 0 0 0]
+ [0 6 0 0 0 0]
+ [1 0 2 0 0 0]
+ [0 0 0 3 0 2]
+ [0 0 0 0 3 3]
+ [0 0 0 0 1 2]]
+
+*******************
+ILPD.csv
+*******************
+took 0:00:01.820864 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.705479452055
+[[90 18]
+ [25 13]]
+took 0:00:01.370587 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.739726027397
+[[108   0]
+ [ 38   0]]
+took 0:01:10.879583 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.746575342466
+[[99  9]
+ [28 10]]
+
+*******************
+ionosphere.csv
+*******************
+took 0:00:00.866567 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.897727272727
+[[25  4]
+ [ 5 54]]
+took 0:00:00.624004 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.863636363636
+[[21  8]
+ [ 4 55]]
+took 0:00:37.105873 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.931818181818
+[[24  5]
+ [ 1 58]]
+
+*******************
+iris.csv
+*******************
+took 0:00:00.057945 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.921052631579
+[[12  0  0]
+ [ 0 11  0]
+ [ 0  3 12]]
+took 0:00:00.061871 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.894736842105
+[[12  0  0]
+ [ 0 11  0]
+ [ 2  2 11]]
+took 0:00:02.584816 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.921052631579
+[[11  1  0]
+ [ 0 11  0]
+ [ 0  2 13]]
+
+*******************
+libras.csv
+*******************
+took 0:00:01.836806 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.566666666667
+[[2 3 0 0 0 0 0 0 0 1 0 0 0 0 0]
+ [0 4 0 0 0 1 1 0 0 1 0 0 0 0 0]
+ [0 1 3 0 0 0 1 0 0 0 0 1 0 0 2]
+ [0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 4 0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 2 1 5 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 6 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 2 0 0 2 0 0 0 1]
+ [0 0 0 0 0 0 0 0 6 0 0 0 0 0 0]
+ [0 0 0 0 0 0 2 0 0 1 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 2 0 0 0 2]
+ [0 0 0 0 0 0 0 0 0 0 0 3 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0 3 0 1 0 1]
+ [0 0 0 0 0 1 0 0 0 1 0 0 0 3 0]
+ [1 1 0 0 0 0 0 0 0 0 0 3 0 0 3]]
+took 0:00:01.369765 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.466666666667
+[[2 3 0 0 0 0 0 0 0 0 0 1 0 0 0]
+ [0 6 0 0 0 0 0 0 0 0 0 0 0 1 0]
+ [0 0 7 0 0 0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 3 2 1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 2 0 0 0 1 1 0 0 0 1 0]
+ [0 1 0 2 1 3 1 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 2 1 2 0 0 3 0 0 0]
+ [0 0 0 0 0 0 0 3 0 0 2 0 0 0 0]
+ [0 1 0 0 0 0 4 0 1 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 2 0 0 0 2 0]
+ [0 0 0 0 0 0 0 1 0 0 0 2 1 0 0]
+ [0 0 0 0 0 0 0 0 0 1 0 3 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0 0 0 4 0 0]
+ [0 1 0 0 0 0 1 0 0 0 0 0 0 3 0]
+ [0 1 0 0 0 1 2 1 0 1 1 0 0 0 1]]
+took 0:01:19.894516 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.788888888889
+[[3 3 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [1 6 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 7 0 0 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 4 0 2 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 5 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 8 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 6 1 1 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 4 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 6 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 4 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 4 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 2 0 2 0 0 0]
+ [0 0 0 0 0 0 0 2 0 0 1 0 2 0 0]
+ [0 0 0 0 1 0 0 0 0 0 0 0 0 4 0]
+ [0 0 0 1 0 0 0 0 0 0 0 0 1 0 6]]
+
+*******************
+magic04.csv
+*******************
+took 0:01:42.718635 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.820189274448
+[[2672  389]
+ [ 466 1228]]
+took 0:01:11.722509 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.815352260778
+[[2659  402]
+ [ 476 1218]]
+took 1:20:04.732731 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.874658254469
+[[2891  170]
+ [ 426 1268]]
+
+*******************
+nursery.csv
+*******************
+took 0:00:01.409412 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.917592592593
+[[1066    0    0    1    8]
+ [   0    0    1    0    0]
+ [   0    0   56   35    0]
+ [   9    0   26  969   87]
+ [   5    0    0   95  882]]
+took 0:00:00.943760 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.903703703704
+[[1075    0    0    0    0]
+ [   0    0    1    0    0]
+ [   0    0   64   27    0]
+ [   0    0    5  927  159]
+ [   0    0    0  120  862]]
+took 0:01:04.414140 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.988271604938
+[[1075    0    0    0    0]
+ [   0    0    1    0    0]
+ [   0    0   86    5    0]
+ [   0    0    0 1060   31]
+ [   0    0    0    1  981]]
+
+*******************
+optDigitsHandwritten.csv
+*******************
+took 0:00:24.817233 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.841992882562
+[[126   1   4   1   1   0   1   1   8   1]
+ [  0 136   3   4   2   5   0   1   3   3]
+ [  1   9 130   5   1   1   1   0   4   2]
+ [  1   2   6 107   1   5   0   0   8   9]
+ [  0   3   0   2 117   2   3   1   3   2]
+ [  2   1   1   6   0 107   1   0   3   6]
+ [  0   2   3   0   4   3 117   0   0   1]
+ [  1   1   4   3   1   0   0 125   3   7]
+ [  0   7   6   4   3   2   1   3 109   4]
+ [  3   3   2   8   6   1   0   4   1 109]]
+took 0:00:17.478055 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.817081850534
+[[133   2   0   1   1   0   1   0   5   1]
+ [  2 129   4   1   6   4   0   1   9   1]
+ [  0   7 121   4   0   4   2   1  13   2]
+ [  0   4   0 110   0   0   0   4   9  12]
+ [  6   4   0   0 108   2   6   5   1   1]
+ [  0   0   0   4   0 107   2   0  11   3]
+ [  2   2   2   0   3   7 111   1   2   0]
+ [  1   4   2   2   6   1   0 120   2   7]
+ [  1   7   4   2   4   5   1   4 103   8]
+ [  2   3   1   6   5   3   0   3   8 106]]
+took 0:18:33.090002 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.982918149466
+[[143   0   0   0   0   0   0   0   1   0]
+ [  0 156   0   0   0   0   0   1   0   0]
+ [  0   0 154   0   0   0   0   0   0   0]
+ [  0   0   0 134   0   1   0   1   3   0]
+ [  0   0   0   0 132   0   0   0   0   1]
+ [  0   0   0   1   0 124   0   0   0   2]
+ [  0   2   0   0   0   0 128   0   0   0]
+ [  0   1   0   1   0   0   0 141   0   2]
+ [  0   1   0   0   0   0   0   0 138   0]
+ [  0   0   0   1   0   1   0   2   2 131]]
+
+*******************
+pendDigits.csv
+*******************
+took 0:00:29.929407 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.941775836972
+[[273   0   0   0   1   0   2   0   1   1]
+ [  1 239   8   3   2   0   1   1   0   6]
+ [  0  19 284   1   0   0   1   6   0   1]
+ [  0   6   1 280   2   2   0   0   0   6]
+ [  1   0   0   0 296   0   2   1   0   9]
+ [  0   2   0   9   0 216   0   0   2   6]
+ [  0   0   1   0   1   1 244   0   3   0]
+ [  0   5   3   1   0   0   0 290   8   3]
+ [  4   0   0   0   0   2   1   2 244   0]
+ [  0   3   0   4   6   6   0   2   0 222]]
+took 0:00:20.588098 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.946506550218
+[[270   0   0   0   0   0   0   0   6   2]
+ [  0 236  12   4   0   2   0   3   0   4]
+ [  0  22 286   0   0   0   0   3   0   1]
+ [  0   2   1 280   0   8   0   4   0   2]
+ [  1   3   0   0 301   0   0   0   0   4]
+ [  0   0   0   3   0 222   0   0   3   7]
+ [  0   1   0   0   0   2 246   0   1   0]
+ [  0   8   3   0   0   1   0 293   3   2]
+ [  4   0   1   0   0   0   0   4 243   1]
+ [  1   3   0   3   7   4   0   0   1 224]]
+took 0:22:26.401615 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.990538573508
+[[275   0   0   0   1   0   0   0   1   1]
+ [  0 249   8   1   0   0   0   1   0   2]
+ [  0   1 311   0   0   0   0   0   0   0]
+ [  0   2   1 293   0   0   0   0   0   1]
+ [  0   0   0   0 309   0   0   0   0   0]
+ [  0   0   0   1   0 234   0   0   0   0]
+ [  0   0   0   0   0   1 249   0   0   0]
+ [  0   1   0   0   0   0   0 307   2   0]
+ [  0   0   0   0   0   0   0   0 253   0]
+ [  0   0   0   0   1   0   0   0   0 242]]
+
+*******************
+satimage.csv
+*******************
+took 0:00:33.918171 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.839030453698
+[[345   0   5   4   8   0]
+ [  4 176   0   0  10   2]
+ [  8   2 315  18   2   8]
+ [  1   3  30  81   6  35]
+ [ 12  13   1   1 128  19]
+ [  0   1   4  45  17 305]]
+took 0:00:24.592963 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.83343691734
+[[340   1   6   4  10   1]
+ [  1 178   1   4   8   0]
+ [  6   2 311  29   0   5]
+ [  7   1  38  76   5  29]
+ [ 14   8   1   5 123  23]
+ [  3   2  11  30  13 313]]
+took 0:26:14.460084 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.914853946551
+[[358   1   2   0   1   0]
+ [  0 189   0   0   2   1]
+ [  3   0 346   4   0   0]
+ [  2   0  33  89   2  30]
+ [  8   2   1   1 150  12]
+ [  0   0   3  20   9 340]]
+
+*******************
+seeds.csv
+*******************
+took 0:00:00.167972 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.830188679245
+[[19  1  0]
+ [ 0 15  0]
+ [ 8  0 10]]
+took 0:00:00.125130 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.88679245283
+[[19  0  1]
+ [ 0 15  0]
+ [ 5  0 13]]
+took 0:00:06.868869 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.962264150943
+[[19  0  1]
+ [ 0 15  0]
+ [ 1  0 17]]
+
+*******************
+skinSeg.csv
+*******************
+took 0:03:59.460946 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.999167547146
+[[13009    24]
+ [   28 49405]]
+took 0:02:38.640518 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.998911407806
+[[13005    28]
+ [   40 49393]]
+took 4:44:19.589067 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.999583773573
+[[13028     5]
+ [   21 49412]]
+
+*******************
+soybean.csv
+*******************
+took 0:00:00.115547 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.877192982456
+[[ 4  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0 23  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0 13  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  2  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  2  4  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  3  0 27  0  0  0  0  0  0  1  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  7  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  4  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  6  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  3  0  0  0  0  0  0  0]
+ [ 0  3  1  2  0  3  0  0  0  0  0  0 16  0  1  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0]
+ [ 0  0  0  0  0  4  0  0  0  0  0  0  0  0  3  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 18  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  6  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  4  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  5]]
+took 0:00:00.112425 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.748538011696
+[[ 4  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0 19  0  0  0  3  0  0  0  0  0  1  0  0  1  0  0  0  0]
+ [ 0  0  7  0  0  0  2  0  0  0  0  0  0  0  0  2  0  2  0]
+ [ 0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0]
+ [ 0  0  0  3  0  0  1  0  1  0  0  0  0  0  0  0  0  1  0]
+ [ 0  4  0  0  0 25  0  0  0  0  0  0  2  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  7  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  4  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  6  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  3  0  0  0  0  0  0  0]
+ [ 0  6  0  0  0  3  0  0  0  0  0  0 16  0  1  0  0  0  0]
+ [ 0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  5  0  0  0  0  0  0  0  2  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 18  0  0  0]
+ [ 0  0  0  0  0  0  2  0  0  0  0  0  0  0  0  0  4  0  0]
+ [ 0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  3  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  5]]
+took 0:00:06.654210 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.918128654971
+[[ 4  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0 24  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0 13  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  2  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  1  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  3  0  0  0 28  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  7  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  4  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  6  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  2  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  3  0  0  0  0  0  0  0]
+ [ 0  7  0  0  0  2  0  0  0  0  0  0 17  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0]
+ [ 0  0  0  0  0  1  0  0  0  0  0  0  0  0  6  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 18  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  6  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  4  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  5]]
+
+*******************
+spirals.csv
+*******************
+took 0:00:19.099899 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.982
+[[797   5  11]
+ [  5 797   6]
+ [ 10   8 861]]
+took 0:00:14.410987 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.9684
+[[783  12  18]
+ [ 12 782  14]
+ [  7  16 856]]
+took 0:15:41.030901 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.986
+[[798   4  11]
+ [  4 800   4]
+ [  5   7 867]]
+
+*******************
+splice.csv
+*******************
+took 0:00:01.661424 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.844611528822
+[[171  28  18]
+ [ 10 130  21]
+ [  9  38 373]]
+took 0:00:01.190438 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.853383458647
+[[175  19  23]
+ [ 10 128  23]
+ [ 20  22 378]]
+took 0:01:14.076864 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.967418546366
+[[212   1   4]
+ [  8 152   1]
+ [  3   9 408]]
+
+*******************
+vowelc.csv
+*******************
+took 0:00:02.397726 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.645161290323
+[[24  1  1  0  0  0  0  0  0  0  0]
+ [ 3 12  1  0  0  0  0  0  0  1  0]
+ [ 3  3 13  1  0  0  0  0  0  0  2]
+ [ 0  0  3 15  2  2  0  1  1  0  2]
+ [ 0  0  0  0 13  9  1  0  0  0  3]
+ [ 0  0  0  0  2  8  0  0  1  1  5]
+ [ 1  0  0  0  3  0 16  3  5  1  1]
+ [ 0  0  0  0  0  0  0 18  1  0  0]
+ [ 0  0  0  0  0  2  0  3  9  2  3]
+ [ 2  2  0  0  0  0  0  2  1 10  0]
+ [ 0  0  1  0  0  3  2  0  1  0 22]]
+took 0:00:01.750668 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.588709677419
+[[15  8  0  0  0  1  0  0  0  0  2]
+ [ 1 11  2  0  0  2  0  0  0  0  1]
+ [ 2  3 13  2  0  0  2  0  0  0  0]
+ [ 0  0  1 16  0  3  0  0  4  0  2]
+ [ 0  0  0  0 14  3  5  1  1  1  1]
+ [ 0  0  4  0  1  7  2  1  1  0  1]
+ [ 0  0  0  0  4  1 14  7  4  0  0]
+ [ 0  0  0  0  0  0  1 14  3  1  0]
+ [ 1  0  0  0  1  0  1  4  7  5  0]
+ [ 1  0  0  0  0  0  0  1  2 12  1]
+ [ 0  0  3  0  0  1  0  0  2  0 23]]
+took 0:02:00.594487 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.895161290323
+[[26  0  0  0  0  0  0  0  0  0  0]
+ [ 0 17  0  0  0  0  0  0  0  0  0]
+ [ 0  2 19  0  0  0  1  0  0  0  0]
+ [ 0  0  0 22  0  3  0  0  0  0  1]
+ [ 0  0  0  0 20  4  1  0  1  0  0]
+ [ 0  0  0  0  2 14  0  0  0  0  1]
+ [ 0  0  0  0  1  0 24  3  2  0  0]
+ [ 0  0  0  0  0  0  0 19  0  0  0]
+ [ 0  0  0  0  0  0  0  2 16  1  0]
+ [ 0  0  0  0  0  0  0  0  0 17  0]
+ [ 0  0  1  0  0  0  0  0  0  0 28]]
+
+*******************
+voweln.csv
+*******************
+took 0:00:02.882168 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.689516129032
+[[17  4  0  0  0  0  0  0  0  1  0]
+ [ 1 19  1  0  0  0  1  0  1  1  1]
+ [ 0  8 19  0  0  0  0  0  1  2  1]
+ [ 0  0  2 21  2  1  0  0  0  0  3]
+ [ 0  0  2  0 13  1  0  0  0  0  1]
+ [ 0  0  1  1  4 10  0  0  0  0  4]
+ [ 0  0  1  0  5  0 11  2  2  0  2]
+ [ 0  0  0  0  0  0  2 13  5  0  0]
+ [ 0  0  0  0  0  1  1  0 15  0  2]
+ [ 0  0  0  0  0  1  0  0  4 19  0]
+ [ 0  0  1  0  0  2  0  0  1  0 14]]
+took 0:00:02.443742 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.661290322581
+[[18  3  0  0  0  0  0  0  0  1  0]
+ [ 2 18  2  1  0  0  0  0  0  2  0]
+ [ 1  3 19  3  0  2  0  0  1  1  1]
+ [ 0  0  1 22  2  1  0  0  0  0  3]
+ [ 0  0  0  0 10  2  3  1  1  0  0]
+ [ 0  0  2  4  2 10  0  1  0  0  1]
+ [ 0  0  0  0  0  1 14  7  1  0  0]
+ [ 0  0  0  0  1  0  5 14  0  0  0]
+ [ 0  0  1  0  1  1  4  3  8  0  1]
+ [ 1  1  0  0  1  0  0  0  4 16  1]
+ [ 0  0  0  2  0  0  0  0  1  0 15]]
+took 0:02:07.019813 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.931451612903
+[[22  0  0  0  0  0  0  0  0  0  0]
+ [ 1 22  1  0  0  0  0  0  1  0  0]
+ [ 2  3 26  0  0  0  0  0  0  0  0]
+ [ 0  0  0 29  0  0  0  0  0  0  0]
+ [ 0  0  0  0 16  0  0  0  1  0  0]
+ [ 0  0  0  0  0 18  0  0  0  0  2]
+ [ 0  0  0  0  1  0 20  1  1  0  0]
+ [ 0  0  0  0  0  0  0 19  1  0  0]
+ [ 0  0  0  0  0  0  0  0 19  0  0]
+ [ 0  0  0  0  0  0  0  0  1 22  1]
+ [ 0  0  0  0  0  0  0  0  0  0 18]]
+
+*******************
+waveform.csv
+*******************
+took 0:00:24.777256 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.728
+[[283  69  51]
+ [ 71 299  31]
+ [ 60  58 328]]
+took 0:00:18.493605 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.7384
+[[298  53  52]
+ [ 59 299  43]
+ [ 67  53 326]]
+took 0:18:00.588735 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.8384
+[[326  41  36]
+ [ 42 334  25]
+ [ 33  25 388]]
+
+*******************
+waveformNoise.csv
+*******************
+took 0:00:33.984605 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.7344
+[[295  69  60]
+ [ 65 317  41]
+ [ 64  33 306]]
+took 0:00:25.295455 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.7352
+[[306  59  59]
+ [ 60 321  42]
+ [ 68  43 292]]
+took 0:23:56.686080 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.8648
+[[362  26  36]
+ [ 37 368  18]
+ [ 27  25 351]]
+
+*******************
+yeast.csv
+*******************
+took 0:00:03.692723 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.522911051213
+[[60  1  0  0  3 15 31  1  0]
+ [ 0  7  1  0  0  2  0  0  0]
+ [ 0  1 10  0  0  1  0  0  1]
+ [ 1  1  2  1  0  3  1  0  0]
+ [ 2  0  0  1 26  5  2  0  3]
+ [13  0  0  3  3 28 14  2  0]
+ [33  0  0  1  3 12 60  0  0]
+ [ 1  1  0  0  0  0  2  2  0]
+ [ 2  1  0  1  1  2  4  0  0]]
+took 0:00:02.563582 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.452830188679
+[[35  3  1  0  3 14 55  0  0]
+ [ 0  7  1  0  0  2  0  0  0]
+ [ 0  2  7  3  1  0  0  0  0]
+ [ 3  1  3  1  1  0  0  0  0]
+ [ 2  0  0  3 30  3  0  0  1]
+ [ 7  1  1  1  3 34 16  0  0]
+ [41  1  0  1  1 11 54  0  0]
+ [ 1  1  0  0  0  1  3  0  0]
+ [ 4  1  0  1  2  0  3  0  0]]
+took 0:02:45.301752 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.614555256065
+[[71  2  0  0  2 10 26  0  0]
+ [ 0  7  1  0  0  2  0  0  0]
+ [ 0  3 10  0  0  0  0  0  0]
+ [ 3  1  2  2  1  0  0  0  0]
+ [ 2  0  0  0 34  2  1  0  0]
+ [11  0  1  2  2 42  5  0  0]
+ [40  0  0  1  2  6 60  0  0]
+ [ 2  0  0  1  0  0  1  2  0]
+ [ 5  1  0  1  2  1  1  0  0]]
+
+*******************
+zoo.csv
+*******************
+took 0:00:00.006681 to generate <function aa_decision_tree at 0x1034979b0>
+accuracy of <function aa_decision_tree at 0x1034979b0> was:
+0.846153846154
+[[10  0  0  0  0  0  1]
+ [ 0  5  0  0  0  0  0]
+ [ 0  0  0  0  1  0  0]
+ [ 0  0  0  3  0  0  0]
+ [ 0  0  0  0  1  0  0]
+ [ 0  0  0  0  0  1  1]
+ [ 0  0  0  0  0  1  2]]
+took 0:00:00.006492 to generate <function pruned_aa_decision_tree at 0x103497848>
+accuracy of <function pruned_aa_decision_tree at 0x103497848> was:
+0.923076923077
+[[11  0  0  0  0  0  0]
+ [ 0  5  0  0  0  0  0]
+ [ 0  0  1  0  0  0  0]
+ [ 0  0  0  3  0  0  0]
+ [ 0  0  1  0  0  0  0]
+ [ 0  0  0  0  0  2  0]
+ [ 0  0  0  0  0  1  2]]
+took 0:00:00.344526 to generate <function parallel_forest at 0x103497488>
+accuracy of <function parallel_forest at 0x103497488> was:
+0.961538461538
+[[11  0  0  0  0  0  0]
+ [ 0  5  0  0  0  0  0]
+ [ 0  0  1  0  0  0  0]
+ [ 0  0  0  3  0  0  0]
+ [ 0  0  0  0  1  0  0]
+ [ 0  0  0  0  0  2  0]
+ [ 0  0  0  0  0  1  2]]
