@@ -31,7 +31,7 @@ class DecisionTree(Classifier):
             value = self.splitter.split(x)
             # if we have a missing value (impossible for binary splits, but
             # possible for other subclasses), return most common value
-            if self.branches.has_key(value):
+            if value in self.branches:
                 return self.branches[value]
         return None
 
