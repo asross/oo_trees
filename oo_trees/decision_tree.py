@@ -1,4 +1,4 @@
-from classifier import Classifier
+from .classifier import *
 
 class DecisionTree(Classifier):
     def __init__(self, dataset, min_samples_split=2, max_depth=float('inf'), depth=1):
@@ -26,7 +26,7 @@ class DecisionTree(Classifier):
             value = self.splitter.split(x)
             # if we have a missing value (impossible for binary splits, but
             # possible for other subclasses), return most common value
-            if self.branches.has_key(value):
+            if value in self.branches:
                 return self.branches[value]
         return None
 

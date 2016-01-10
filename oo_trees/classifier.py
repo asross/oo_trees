@@ -1,4 +1,4 @@
-from confusion_matrix import ConfusionMatrix
+from .confusion_matrix import *
 
 class Classifier():
     def __init__(self, training_dataset):
@@ -8,6 +8,6 @@ class Classifier():
         raise NotImplementedError
 
     def performance_on(self, test_dataset):
-        predictions = map(self.classify, test_dataset.X)
+        predictions = [self.classify(x) for x in test_dataset.X]
         realities = test_dataset.y
         return ConfusionMatrix(predictions, realities)
