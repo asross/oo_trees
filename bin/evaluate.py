@@ -5,8 +5,7 @@ import sys; sys.path.append('.')
 from dataset import *
 from attribute import *
 from axis_aligned_decision_tree import *
-from pruned_decision_tree import *
-from decision_forest import *
+from random_forest import *
 from classifier import *
 import datetime
 import cProfile
@@ -16,11 +15,8 @@ import sklearn.ensemble
 def aa_decision_tree(dataset):
     return AxisAlignedDecisionTree(dataset, min_samples_split=10, max_depth=100)
 
-def pruned_aa_decision_tree(dataset):
-    return PrunedDecisionTree(dataset, tree_class=aa_decision_tree, split_fraction=0.75)
-
-def parallel_forest(dataset):
-    return DecisionForest(dataset, n_processes=1, n_trees=50, tree_class=aa_decision_tree)
+def aa_random_forest(dataset):
+    return RandomForest(dataset, n_trees=25, tree_class=aa_decision_tree)
 
 class SklearnTree(Classifier):
     def __init__(self, dataset):
@@ -80,9 +76,7 @@ def compare(classifier_classes, dataset):
 dataset_path = './ccf/Datasets'
 dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
-    if dataset_file.startswith('hill'): continue
-    if dataset_file.startswith('letter'): continue
     print("*******************\n"+dataset_file+"\n*******************")
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
-    compare([aa_decision_tree, pruned_aa_decision_tree, SklearnTree, SklearnForest, parallel_forest], dataset)
+    compare([aa_decision_tree, SklearnTree, SklearnForest, aa_random_forest], dataset)
     print()
