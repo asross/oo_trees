@@ -1,5 +1,5 @@
 import numpy
-from splitter import IsEqualSplitter, GreaterThanOrEqualToSplitter
+from .splitter import *
 
 class Attribute():
     def __init__(self, index, name=''):

@@ -1,2 +1,4 @@
 ccf/
 *.pyc
+*.egg-info
+*.eggs

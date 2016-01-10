@@ -1,4 +1,4 @@
-from classifier import Classifier
+from .classifier import *
 
 class DecisionTree(Classifier):
     def __init__(self, dataset, min_samples_split=2, max_depth=float('inf'), depth=1):

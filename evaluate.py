@@ -1,14 +1,14 @@
+ #! /usr/bin/env python
+
 import os
 import csv
 import numpy
-import sys; sys.path.append('./oo_trees')
-from dataset import *
-from attribute import *
-from axis_aligned_decision_tree import *
-from random_forest import *
-from classifier import *
+from oo_trees.dataset import *
+from oo_trees.attribute import *
+from oo_trees.axis_aligned_decision_tree import *
+from oo_trees.random_forest import *
+from oo_trees.classifier import *
 import datetime
-import cProfile
 import sklearn.tree
 import sklearn.ensemble
 

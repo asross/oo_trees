@@ -1,4 +1,4 @@
-from confusion_matrix import ConfusionMatrix
+from .confusion_matrix import *
 
 class Classifier():
     def __init__(self, training_dataset):
