@@ -30,8 +30,7 @@ class ConfusionMatrix:
         self.outcomes = sorted(list(outcomes))
 
     def to_array(self):
-        return numpy.array(map(lambda o: map(lambda oo: self.counts[o][oo],
-          self.outcomes), self.outcomes))
+        return numpy.array([[self.counts[o][oo] for oo in self.outcomes] for o in self.outcomes])
 
     def true_positives(self, outcome):
         return self.counts[outcome][outcome]
@@ -60,10 +59,10 @@ class ConfusionMatrix:
         return self.true_negatives(outcome) / float(self.total - self.counts[outcome].total)
 
     def sensitivity(self):
-        return numpy.mean(map(self.sensitivity_for, self.outcomes))
+        return numpy.mean([self.sensitivity_for(o) for o in self.outcomes])
 
     def specificity(self):
-        return numpy.mean(map(self.specificity_for, self.outcomes))
+        return numpy.mean([self.specificity_for(o) for o in self.outcomes])
 
 if __name__ == '__main__':
     import unittest

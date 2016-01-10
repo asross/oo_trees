@@ -10,7 +10,7 @@ class Dataset():
         self.X = X
         self.y = y
         self.outcome_counter = OutcomeCounter(y)
-        self.attributes = attributes or map(CategoricalAttribute, range(X.shape[1]))
+        self.attributes = attributes or [CategoricalAttribute(i) for i in range(X.shape[1])]
         assert self.X.shape[0] == len(y), "len(y) must match len(X)"
         assert self.X.shape[1] == len(self.attributes), "len(attributes) must match len(X[i])"
 
@@ -58,7 +58,7 @@ class Dataset():
 
     def random_split(self, fraction):
         n_examples = int(len(self) * fraction)
-        indices = range(len(self))
+        indices = list(range(len(self)))
         random.shuffle(indices)
         return self.take(indices[:n_examples]), self.take(indices[n_examples:])
 

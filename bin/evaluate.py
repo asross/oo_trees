@@ -23,10 +23,10 @@ def generate_dataset(filename):
     # Convert CSV to numpy arrays of X and y
     X = []
     y = []
-    with open(filename, 'rb') as csv_file:
+    with open(filename, 'r') as csv_file:
          for row in csv.reader(csv_file):
              if row[0] == 'bOrdinal': continue
-             X.append(map(float, row[0:-1]))
+             X.append([float(n) for n in row[0:-1]])
              y.append(float(row[-1]))
     X = numpy.array(X)
     y = numpy.array(y)
@@ -47,11 +47,11 @@ def evaluate(classifier_class, training_dataset, test_dataset):
     t1 = datetime.datetime.now()
     classifier = classifier_class(training_dataset)
     t2 = datetime.datetime.now()
-    print 'took', t2-t1, 'to generate', classifier_class
+    print('took', t2-t1, 'to generate', classifier_class)
     performance = classifier.performance_on(test_dataset)
-    print 'accuracy of', classifier_class, 'was:'
-    print performance.accuracy
-    print performance.to_array()
+    print('accuracy of', classifier_class, 'was:')
+    print(performance.accuracy)
+    print(performance.to_array())
 
 def compare(classifier_classes, dataset):
     training_dataset, test_dataset = dataset.random_split(0.75)
@@ -63,9 +63,7 @@ dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
     if dataset_file.startswith('hill'): continue
     if dataset_file.startswith('letter'): continue
-    print "*******************"
-    print dataset_file
-    print "*******************"
+    print("*******************\n"+dataset_file+"\n*******************")
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
     compare([aa_decision_tree, pruned_aa_decision_tree, parallel_forest], dataset)
-    print ""
+    print()
