@@ -1,7 +1,7 @@
 import os
 import csv
 import numpy
-import sys; sys.path.append('.')
+import sys; sys.path.append('./oo_trees')
 from dataset import *
 from attribute import *
 from axis_aligned_decision_tree import *

@@ -1,1 +1,1 @@
- ls *.py | xargs -n 1 -P 3 python
+ ls oo_trees/*.py | xargs -n 1 -P 3 python
