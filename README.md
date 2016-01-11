@@ -9,3 +9,16 @@ Where possible, external parameters names will match scikit-learn's
 implementations of
 [decision trees](http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html)
 and [random forests](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html).
+
+## Usage
+
+```python
+X = examples
+y = outcomes
+attributes = [
+  CategoricalAttribute(0, 'color'),
+  NumericAttribute(1, 'latitude'),
+  NumericAttribute(2, 'longitude')
+]
+
+dataset = oo_trees.Dataset(X, y)
