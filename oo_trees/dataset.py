@@ -2,6 +2,7 @@ from collections import defaultdict
 from collections import Counter
 from .outcome_counter import *
 from .attribute import *
+from .single_attribute_splitter_finder import *
 import random
 import numpy
 
@@ -17,29 +18,9 @@ class Dataset():
     def __len__(self):
         return self.X.shape[0]
 
-    def entropy(self):
-        return self.outcome_counter.entropy()
-
-    def each_single_attribute_splitter(self):
-        if not self.outcome_counter.is_unanimous():
-            #for attribute in self.attributes:
-            for attribute in random.sample(self.attributes, int(numpy.ceil(numpy.sqrt(len(self.attributes))))):
-                for splitter in attribute.each_splitter(self.X[:, attribute.index]):
-                    yield splitter
-
     def best_single_attribute_splitter(self):
-        return self.best_splitter(self.each_single_attribute_splitter())
-
-    def best_splitter(self, splitters):
-        # in python 3+, this could just be `return min(splitters, key=self.splitter_entropy, default=None)`
-        best_splitter = None
-        min_entropy = float('inf')
-        for splitter in splitters:
-            entropy = self.splitter_entropy(splitter)
-            if entropy < min_entropy:
-                best_splitter = splitter
-                min_entropy = entropy
-        return best_splitter
+        finder = SingleAttributeSplitterFinder(self, n=len(self.attributes))
+        return finder.best_splitter()
 
     def splitter_entropy(self, splitter):
         splits = defaultdict(OutcomeCounter)

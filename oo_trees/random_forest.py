@@ -1,9 +1,9 @@
 from collections import Counter
 from .classifier import *
-from .axis_aligned_decision_tree import *
+from .decision_tree import *
 
 class RandomForest(Classifier):
-    def __init__(self, dataset, tree_class=AxisAlignedDecisionTree, n_trees=10, examples_per_tree=None):
+    def __init__(self, dataset, tree_class=DecisionTree, n_trees=10, examples_per_tree=None):
         self.trees = [tree_class(dataset.bootstrap(examples_per_tree)) for _i in range(n_trees)]
 
     def vote_on(self, x):

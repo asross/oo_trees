@@ -5,7 +5,7 @@ import csv
 import numpy
 from oo_trees.dataset import *
 from oo_trees.attribute import *
-from oo_trees.axis_aligned_decision_tree import *
+from oo_trees.decision_tree import *
 from oo_trees.random_forest import *
 from oo_trees.classifier import *
 import datetime
@@ -13,7 +13,7 @@ import sklearn.tree
 import sklearn.ensemble
 
 def aa_decision_tree(dataset):
-    return AxisAlignedDecisionTree(dataset, min_samples_split=10, max_depth=100)
+    return DecisionTree(dataset, min_samples_split=10, max_depth=100)
 
 def aa_random_forest(dataset):
     return RandomForest(dataset, n_trees=25, tree_class=aa_decision_tree)

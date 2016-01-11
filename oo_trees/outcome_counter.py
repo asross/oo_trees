@@ -22,11 +22,11 @@ class OutcomeCounter():
     def entropy(self):
         return sum(map(self.entropy_of, self.outcomes()))
 
-    def is_unanimous(self):
-        return len(self.counter) == 1
-
     def most_common_value(self):
         return self.counter.most_common(1)[0][0]
+
+    def __len__(self):
+        return len(self.counter)
 
     def __getitem__(self, outcome):
         return self.counter[outcome]

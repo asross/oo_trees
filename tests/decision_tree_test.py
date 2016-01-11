@@ -1,15 +1,15 @@
 import unittest
 import numpy
 from oo_trees.dataset import *
-from oo_trees.axis_aligned_decision_tree import *
+from oo_trees.decision_tree import *
 from oo_trees.attribute import *
 
-class TestAxisAlignedDecisionTree(unittest.TestCase):
+class TestDecisionTree(unittest.TestCase):
     def test_classification(self):
         X = numpy.array([[0, 1], [0, 0], [1, 0], [1, 1]])
         y = numpy.array(['H', 'H', 'H', 'T'])
         dataset = Dataset(X, y)
-        tree = AxisAlignedDecisionTree(dataset)
+        tree = DecisionTree(dataset)
         self.assertEqual(len(tree.branches), 2)
         self.assertEqual(len(tree.branches[1].branches), 0)
         self.assertEqual(len(tree.branches[0].branches), 2)
@@ -26,9 +26,9 @@ class TestAxisAlignedDecisionTree(unittest.TestCase):
         X = numpy.array([[0], [1], [1]])
         y = numpy.array(['H', 'T', 'T'])
         dataset = Dataset(X, y)
-        tree = AxisAlignedDecisionTree(dataset, min_samples_split=0)
+        tree = DecisionTree(dataset, min_samples_split=0)
         self.assertEqual(len(tree.branches), 2)
-        tree = AxisAlignedDecisionTree(dataset, min_samples_split=5)
+        tree = DecisionTree(dataset, min_samples_split=5)
         self.assertEqual(len(tree.branches), 0)
         self.assertEqual(tree.leaf_value(), 'T')
 
@@ -36,11 +36,11 @@ class TestAxisAlignedDecisionTree(unittest.TestCase):
         X = numpy.array([[0], [1], [1]])
         y = numpy.array(['H', 'T', 'T'])
         dataset = Dataset(X, y)
-        tree = AxisAlignedDecisionTree(dataset, max_depth=3)
+        tree = DecisionTree(dataset, max_depth=3)
         self.assertEqual(len(tree.branches), 2)
         numpy.testing.assert_array_equal([2, 2],
                 [t.depth for t in tree.branches.values()])
-        tree = AxisAlignedDecisionTree(dataset, max_depth=1)
+        tree = DecisionTree(dataset, max_depth=1)
         self.assertEqual(len(tree.branches), 0)
         self.assertEqual(tree.leaf_value(), 'T')
 
@@ -52,7 +52,7 @@ class TestAxisAlignedDecisionTree(unittest.TestCase):
         Xtrain = numpy.array([[0.15, 0], [0.232, 1], [0.173, 0], [0.263, 0], [0.671, 0], [0.9, 0], [0.387, 1], [0.482, 1], [0.632, 1], [0.892, 1]])
         ytrain = numpy.array([      'a',        'a',        'a',        'b',        'b',      'b',        'c',        'c',        'a',        'a'])
         training_dataset = Dataset(Xtrain, ytrain, [NumericAttribute(0), CategoricalAttribute(1)])
-        tree = AxisAlignedDecisionTree(training_dataset)
+        tree = DecisionTree(training_dataset)
 
         # expecting
         #         Real
