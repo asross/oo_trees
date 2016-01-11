@@ -2,7 +2,8 @@ import numpy
 from .splitter import *
 
 class Attribute():
-    def __init__(self, index, name=''):
+    def __init__(self, index=None, name=''):
+        if index is None: raise ValueError('must pass an index')
         self.index = index
         self.name = name
 
