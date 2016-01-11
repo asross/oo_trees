@@ -1,5 +1,4 @@
 import setuptools
-import io
 import oo_trees
 
 setuptools.setup(
@@ -16,7 +15,6 @@ setuptools.setup(
     ],
     author_email='andrewslavinross@gmail.com',
     description='Object-oriented implementations of decision tree variants',
-    long_description=io.open('./README.md').read(),
     packages=['oo_trees'],
     include_package_data=True,
     platforms='any',
