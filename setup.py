@@ -22,7 +22,7 @@ setuptools.setup(
     platforms='any',
     classifiers=[
       'Programming Language :: Python',
-      'Development Status :: Alpha',
+      'Development Status :: 3 - Alpha',
       'Natural Language :: English',
       'License :: OSI Approved :: Apache Software License',
       'Operating System :: OS Independent',
