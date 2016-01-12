@@ -1,4 +1,5 @@
 ccf/
+dist/
 *.pyc
 *.egg-info
 *.eggs

@@ -1,5 +1,9 @@
 import setuptools
 import oo_trees
+from subprocess import check_output
+
+rst = check_output("pandoc --from=markdown --to=rst README.md",
+                   shell=True).decode('utf-8')
 
 setuptools.setup(
     name='oo_trees',
@@ -15,6 +19,7 @@ setuptools.setup(
     ],
     author_email='andrewslavinross@gmail.com',
     description='Object-oriented implementations of decision tree variants',
+    long_description=rst,
     packages=['oo_trees'],
     include_package_data=True,
     platforms='any',
