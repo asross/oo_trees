@@ -8,9 +8,16 @@ from oo_trees.attribute import *
 from oo_trees.decision_tree import *
 from oo_trees.random_forest import *
 from oo_trees.classifier import *
+from oo_trees.canonical_correlation_splitter_finder import *
 import datetime
 import sklearn.tree
 import sklearn.ensemble
+
+def cc_decision_tree(dataset):
+    return DecisionTree(dataset, min_samples_split=10, max_depth=100, splitter_finder=CanonicalCorrelationSplitterFinder)
+
+def cc_random_forest(dataset):
+    return RandomForest(dataset, n_trees=10, tree_class=cc_decision_tree)
 
 def aa_decision_tree(dataset):
     return DecisionTree(dataset, min_samples_split=10, max_depth=100)
@@ -78,5 +85,5 @@ dataset_files = os.listdir(dataset_path)
 for dataset_file in dataset_files:
     print("*******************\n"+dataset_file+"\n*******************")
     dataset = generate_dataset(os.path.join(dataset_path, dataset_file))
-    compare([aa_decision_tree, SklearnTree, SklearnForest, aa_random_forest], dataset)
+    compare([aa_decision_tree, cc_decision_tree, SklearnTree, SklearnForest, cc_random_forest], dataset)
     print()

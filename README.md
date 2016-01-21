@@ -43,6 +43,17 @@ print(d_tree_confusion_matrix.accuracy)
 print(forest_confusion_matrix.accuracy)
 ```
 
+For canonical correlation trees, you can dependency-inject the behavior:
+
+```python
+from oo_trees.canonical_correlation_splitter_finder import *
+
+cc_tree = DecisionTree(training_dataset,
+    splitter_finder=CanonicalCorrelationSplitterFinder)
+```
+
+This interface will hopefully become more elegant soon.
+
 When initializing datasets, we assume all attributes of the training examples
 are categorical. If that is not the case, you can pass in an additional
 `attribute_types` variable on initialize:

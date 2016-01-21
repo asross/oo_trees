@@ -12,6 +12,7 @@ class DecisionTree(Classifier):
         self.min_samples_split = min_samples_split
         self.outcome_counter = dataset.outcome_counter
         self.splitter = None
+        self.splitter_finder = splitter_finder
         self.branches = {}
 
         # Stop recursing if we're at a leaf
@@ -28,12 +29,10 @@ class DecisionTree(Classifier):
 
     def new_branch(self, dataset):
         return self.__class__(dataset,
+                splitter_finder=self.splitter_finder,
                 min_samples_split=self.min_samples_split,
                 max_depth=self.max_depth,
                 depth=self.depth+1)
-
-    def splitter_finder(self, dataset):
-        raise NotImplementedError
 
     def branch_for(self, x):
         # we are a leaf node unless we have a splitter
