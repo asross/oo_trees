@@ -1,4 +1,5 @@
 import numpy
+import random
 from .splitter import *
 from sklearn.cross_decomposition import CCA
 from numpy.linalg import matrix_rank
